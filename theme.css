@@ -1,0 +1,2331 @@
+/* Hanko — an Obsidian theme
+   Ink on paper, paper on concrete, and exactly one red mark: the seal.
+
+   Named after the Japanese name seal. Colours come from Sanzo Wada's
+   "A Dictionary of Color Combinations" (digital data set by Matt DesLauriers,
+   github.com/mattdesl/dictionary-of-colour-combinations).
+
+   - Text stays ink. Exception: bold text in the anchor colour Raw Sienna
+     (light: Burnt Sienna for contrast), other tones selectable.
+   - Top-level folders carry a Wada plate: No. 279 in light mode,
+     No. 293 in dark mode, solid pills, Raw Sienna always first.
+   - The seal appears on notes you sign off with cssclasses: seal,
+     on the empty tab and next to the vault name.
+   - Every text/background pair reaches at least 4.5:1.
+   - No network requests, everything is embedded.
+
+   Author: Michael Doroszewski · License: MIT */
+
+/* @settings
+name: Hanko
+id: hanko
+settings:
+  -
+    id: hanko-abschnitt-abdruck
+    title: Seal
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: hanko-siegel-ueberall
+    title: Seal on every note
+    description: Otherwise only on notes with the property cssclasses seal, the notes you sign off.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-kein-abdruck
+    title: Hide the seal everywhere
+    description: Also on the empty tab and next to the vault name.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-abdruck-ruhig
+    title: Seal without stamping motion
+    description: The seal appears at once, without the short stamping animation.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-abschnitt-farbe
+    title: Colour
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: hanko-fett
+    title: Bold text colour
+    description: Each tone has its own light and dark value and reaches at least 4.5:1.
+    type: class-select
+    allowEmpty: false
+    default: hanko-fett-anker
+    options:
+      -
+        label: Anchor (Burnt Sienna, dark Raw Sienna)
+        value: hanko-fett-anker
+      -
+        label: Indigo (Deep Lyons Blue, dark Salvia Blue)
+        value: hanko-fett-indigo
+      -
+        label: Red (Brick Red, dark Peach Red)
+        value: hanko-fett-rot
+      -
+        label: Umber (Pale Raw Umber, dark Yellow Ocher)
+        value: hanko-fett-ocker
+      -
+        label: Plum (Veronia Purple, dark Laelia Pink)
+        value: hanko-fett-pflaume
+      -
+        label: Green (Diamine Green, dark Green)
+        value: hanko-fett-gruen
+      -
+        label: Ink (no colour)
+        value: hanko-fett-tinte
+  -
+    id: hanko-tafel-hell
+    title: Folder plate in light mode
+    description: Dark mode always uses plate No. 293. No. 327 shares Raw Sienna and Ecru with No. 279 but is lighter and softer.
+    type: class-select
+    allowEmpty: false
+    default: hanko-tafel-hell-279
+    options:
+      -
+        label: No. 279 (Raw Sienna, Dark Tyrian Blue, Ecru, Vinaceous Cinnamon)
+        value: hanko-tafel-hell-279
+      -
+        label: No. 327 (Raw Sienna, Eosine Pink, Ecru, Grayish Lavender B)
+        value: hanko-tafel-hell-327
+  -
+    id: hanko-ordner-tinte
+    title: Do not colour folders
+    description: Top-level folders stay ink on paper instead of a Wada plate.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-ordner-zart
+    title: Soft folder colours
+    description: Plate colours as translucent surfaces instead of solid pills, names in ink.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-abschnitt-fokus
+    title: Focus
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: hanko-fokus
+    title: One task in view
+    description: While writing, everything except the paragraph with the cursor fades back. Per note with cssclasses focus.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-abschnitt-form
+    title: Form
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: hanko-keine-h2-linie
+    title: No hairline above level-2 headings
+    description: Otherwise every H2 starts with a hairline.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-callout-normal
+    title: Callout titles in regular type
+    description: Instead of small spaced capitals.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-kein-glas
+    title: Turn off glass
+    description: Menus, palettes, notices and the status bar become opaque.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-fussleiste-fest
+    title: Status bar fixed in the corner
+    description: Instead of a floating pill.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-rollbalken-aus
+    title: Hide scrollbars completely
+    description: Otherwise they appear thin while hovering.
+    type: class-toggle
+    default: false
+*/
+
+/* =========================================================
+   1. Werte
+   ========================================================= */
+
+.theme-light {
+  color-scheme: light;
+  /* Grund: Beton, aus Wadas Warm Gray (#a1a39a) zu 24 Prozent in Papier.
+     Rahmen, Seitenleisten und Tabs stehen auf Beton, die Notiz auf Papier. */
+  --hanko-grund: #e0e0db;
+  --hanko-grund-rgb: 224, 224, 219;
+  --hanko-papier: #f4f3ef;
+  --hanko-flaeche: #fdfcfa;
+  --hanko-flaeche-2: #eeece6;
+  --hanko-linie: #e0ddd5;
+  --hanko-tinte: #151515;
+  --hanko-tinte-2: #5a5853;
+  --hanko-tinte-3: #8b8982;
+  --hanko-rot: #dd4027;
+  --hanko-indigo: #1c4286;
+  --hanko-ocker: #bb7125;
+  --hanko-pflaume: #8c4c62;
+  --hanko-ok: #1a7444;
+
+  --hanko-papier-rgb: 244, 243, 239;
+  --hanko-flaeche-rgb: 253, 252, 250;
+  --hanko-tinte-rgb: 21, 21, 21;
+  --hanko-tinte-2-rgb: 90, 88, 83;
+  --hanko-tinte-3-rgb: 139, 137, 130;
+  --hanko-rot-rgb: 221, 64, 39;
+  --hanko-indigo-rgb: 28, 66, 134;
+  --hanko-ocker-rgb: 187, 113, 37;
+  --hanko-pflaume-rgb: 140, 76, 98;
+  --hanko-ok-rgb: 26, 116, 68;
+
+  --hanko-glas: rgba(250, 249, 246, 0.72);
+  --hanko-glas-rand: rgba(255, 255, 255, 0.7);
+  --hanko-schatten: 0 1px 2px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.06);
+
+  /* Akzent als HSL, falls Obsidian ihn daraus ableitet (Red Orange) */
+  --hanko-rot-hsl: 8, 73%, 51%;
+
+  /* Fett: Ankerfarbe, als Schrift das gebrannte Raw Sienna (Burnt Sienna) */
+  --hanko-fett: #ae5224;
+  --hanko-fett-rgb: 174, 82, 36;
+
+  /* Orte hell: Wadas Tafel Nr. 279. Schrift auf der Pille ab 4,5 zu 1.
+     Blasse Töne bekommen dichtere Flächen, damit ein offener Ordner sichtbar bleibt. */
+  --hanko-tafel-1-rgb: 187, 113, 37;   /* Raw Sienna          #bb7125, Schrift 4,8 – Ankerfarbe */
+  --hanko-tafel-1-schrift: #151515;
+  --hanko-tafel-2-rgb: 18, 53, 78;     /* Dark Tyrian Blue    #12354e, Schrift 12,5 */
+  --hanko-tafel-2-schrift: #fdfcfa;
+  --hanko-tafel-3-rgb: 194, 174, 147;  /* Ecru                #c2ae93, Schrift 8,5 */
+  --hanko-tafel-3-schrift: #151515;
+  --hanko-tafel-3-dichte: 2.2;
+  --hanko-tafel-4-rgb: 238, 167, 140;  /* Vinaceous Cinnamon  #eea78c, Schrift 9,2 */
+  --hanko-tafel-4-schrift: #151515;
+  --hanko-tafel-4-dichte: 2;
+
+  /* Orte: Archiv und Ordner ohne Ton in Wadas Warm Gray (#a1a39a), dem Ton,
+     aus dem der Beton gemischt ist. Schrift 7,2 zu 1. Dichte der Flächen. */
+  --hanko-beton-rgb: 161, 163, 154;
+  --hanko-beton-schrift: var(--hanko-tinte);
+  --hanko-ort-flaeche: 0.1;
+  --hanko-ort-hover: 0.16;
+  --hanko-ort-aktiv: 0.26;
+  --hanko-ort-linie: 0.85;
+  --hanko-ort-zart: 0.22;
+}
+
+.theme-dark {
+  color-scheme: dark;
+  /* Grund: Wadas Black (#111314), die häufigste Farbe im Buch.
+     Sie steht mit Raw Sienna und Peach Red in Nr. 298. */
+  --hanko-grund: #111314;
+  --hanko-grund-rgb: 17, 19, 20;
+  --hanko-papier: #111314;
+  --hanko-flaeche: #1a1a1a;
+  --hanko-flaeche-2: #232322;
+  --hanko-linie: #2c2c2a;
+  --hanko-tinte: #f2f0ea;
+  --hanko-tinte-2: #aba9a2;
+  --hanko-tinte-3: #7d7b75;
+  --hanko-rot: #f15a30;
+  --hanko-indigo: #97acc8;
+  --hanko-ocker: #e2b540;
+  --hanko-pflaume: #ca92a8;
+  --hanko-ok: #489b6e;
+
+  --hanko-papier-rgb: 17, 19, 20;
+  --hanko-flaeche-rgb: 26, 26, 26;
+  --hanko-tinte-rgb: 242, 240, 234;
+  --hanko-tinte-2-rgb: 171, 169, 162;
+  --hanko-tinte-3-rgb: 125, 123, 117;
+  --hanko-rot-rgb: 241, 90, 48;
+  --hanko-indigo-rgb: 151, 172, 200;
+  --hanko-ocker-rgb: 226, 181, 64;
+  --hanko-pflaume-rgb: 202, 146, 168;
+  --hanko-ok-rgb: 72, 155, 110;
+
+  --hanko-glas: rgba(26, 26, 26, 0.68);
+  --hanko-glas-rand: rgba(255, 255, 255, 0.09);
+  --hanko-schatten: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  /* Akzent als HSL (Peach Red) */
+  --hanko-rot-hsl: 13, 87%, 57%;
+
+  /* Fett: Ankerfarbe Raw Sienna */
+  --hanko-fett: #bb7125;
+  --hanko-fett-rgb: 187, 113, 37;
+
+  /* Orte dunkel: Wadas Tafel Nr. 293, alle Töne ab 5 zu 1 gegen Schwarz,
+     Schrift auf der Pille dunkel. */
+  --hanko-tafel-1-rgb: 187, 113, 37;   /* Raw Sienna       #bb7125, Schrift 4,8 – Ankerfarbe */
+  --hanko-tafel-1-schrift: #151515;
+  --hanko-tafel-2-rgb: 72, 155, 110;   /* Green            #489b6e, Schrift 5,4 */
+  --hanko-tafel-2-schrift: #151515;
+  --hanko-tafel-3-rgb: 112, 147, 144;  /* Artemesia Green  #709390, Schrift 5,5 */
+  --hanko-tafel-3-schrift: #151515;
+  --hanko-tafel-4-rgb: 181, 222, 204;  /* Turquoise Green  #b5decc, Schrift 12,4 */
+  --hanko-tafel-4-schrift: #151515;
+
+  /* Orte: Beton und Flächen für dunkel */
+  --hanko-beton-rgb: 44, 44, 42;
+  --hanko-beton-schrift: var(--hanko-tinte);
+  --hanko-ort-flaeche: 0.14;
+  --hanko-ort-hover: 0.22;
+  --hanko-ort-aktiv: 0.34;
+  --hanko-ort-linie: 0.9;
+  --hanko-ort-zart: 0.3;
+}
+
+/* Orte hell, Ausweiche: Wadas Tafel Nr. 327. Raw Sienna und Ecru wie in Nr. 279,
+   es wechseln nur Platz 2 und 4. Alle Pillen mit dunkler Schrift. */
+.theme-light.hanko-tafel-hell-327 {
+  --hanko-tafel-2-rgb: 243, 127, 148;  /* Eosine Pink         #f37f94, Schrift 7,2 */
+  --hanko-tafel-2-schrift: #151515;
+  --hanko-tafel-2-dichte: 1.4;
+  --hanko-tafel-4-rgb: 192, 169, 179;  /* Grayish Lavender B  #c0a9b3, Schrift 8,3 */
+  --hanko-tafel-4-schrift: #151515;
+  --hanko-tafel-4-dichte: 2.2;
+}
+
+/* Fett: wählbare Töne, je hell und dunkel, alle ab 4,5 zu 1 */
+.theme-light.hanko-fett-indigo { --hanko-fett: #1c4286; --hanko-fett-rgb: 28, 66, 134; }    /* Deep Lyons Blue */
+.theme-dark.hanko-fett-indigo { --hanko-fett: #97acc8; --hanko-fett-rgb: 151, 172, 200; }   /* Salvia Blue */
+.theme-light.hanko-fett-rot { --hanko-fett: #a84222; --hanko-fett-rgb: 168, 66, 34; }       /* Brick Red */
+.theme-dark.hanko-fett-rot { --hanko-fett: #f15a30; --hanko-fett-rgb: 241, 90, 48; }        /* Peach Red */
+.theme-light.hanko-fett-ocker { --hanko-fett: #71502f; --hanko-fett-rgb: 113, 80, 47; }     /* Pale Raw Umber */
+.theme-dark.hanko-fett-ocker { --hanko-fett: #e2b540; --hanko-fett-rgb: 226, 181, 64; }     /* Yellow Ocher */
+.theme-light.hanko-fett-pflaume { --hanko-fett: #8c4c62; --hanko-fett-rgb: 140, 76, 98; }   /* Veronia Purple */
+.theme-dark.hanko-fett-pflaume { --hanko-fett: #ca92a8; --hanko-fett-rgb: 202, 146, 168; }  /* Laelia Pink */
+.theme-light.hanko-fett-gruen { --hanko-fett: #1a7444; --hanko-fett-rgb: 26, 116, 68; }     /* Diamine Green */
+.theme-dark.hanko-fett-gruen { --hanko-fett: #489b6e; --hanko-fett-rgb: 72, 155, 110; }     /* Green */
+.theme-light.hanko-fett-tinte,
+.theme-dark.hanko-fett-tinte { --hanko-fett: var(--hanko-tinte); --hanko-fett-rgb: var(--hanko-tinte-rgb); }
+
+/* =========================================================
+   2. Form: Schrift, Radien, Maße
+   ========================================================= */
+
+body {
+  --hanko-radius: 18px;
+  --hanko-radius-erhoeht: 22px;
+  --hanko-schrift: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --hanko-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* The seal: square name stamp with frame and the letter H, used as a mask.
+     Grid 120, uneven ink. Colour comes from --hanko-rot, so it works in
+     light and dark. Replace --hanko-siegel in a snippet for your own mark. */
+  --hanko-siegel: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cfilter id='f' x='-8%25' y='-8%25' width='116%25' height='116%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2' seed='4' result='w'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='w' scale='4' xChannelSelector='R' yChannelSelector='G' result='r'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='9' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -6 0 0 0 4.7' result='s'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='1' seed='6' result='lo'/%3E%3CfeColorMatrix in='lo' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0.55' result='d'/%3E%3CfeComposite in='r' in2='s' operator='in' result='a'/%3E%3CfeComposite in='a' in2='d' operator='in'/%3E%3C/filter%3E%3Cmask id='m'%3E%3Crect x='8' y='8' width='104' height='104' rx='14' fill='%23fff'/%3E%3Crect x='15' y='15' width='90' height='90' rx='8' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M40 34v52M80 34v52M40 60h40' stroke='%23000' stroke-width='10' fill='none' stroke-linecap='square'/%3E%3Cpath d='M51 60h18' stroke='%23fff' stroke-width='0'/%3E%3C/mask%3E%3C/defs%3E%3Crect x='8' y='8' width='104' height='104' rx='14' fill='%23000' mask='url(%23m)' filter='url(%23f)'/%3E%3C/svg%3E");
+  --hanko-siegel-groesse: 3.7rem;
+
+  --font-interface-theme: var(--hanko-schrift);
+  --font-text-theme: var(--hanko-schrift);
+  --font-monospace-theme: var(--hanko-mono);
+  --line-height-normal: 1.55;
+  --file-line-width: 42rem;
+  --bold-weight: 650;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: var(--hanko-radius);
+  --radius-xl: var(--hanko-radius-erhoeht);
+  --input-radius: 10px;
+  --button-radius: 999px;
+  --clickable-icon-radius: 999px;
+  --tab-radius-active: 10px;
+  --callout-radius: var(--hanko-radius);
+  --code-radius: 10px;
+  --modal-radius: var(--hanko-radius-erhoeht);
+  --checkbox-radius: 50%;
+  --tag-radius: 999px;
+  --pill-radius: 999px;
+  --metadata-property-radius: 8px;
+  --divider-width: 1px;
+  --icon-stroke: 1.7px;
+
+  /* Überschriften */
+  --h1-size: 2.2em;
+  --h1-weight: 750;
+  --h1-line-height: 1.08;
+  --h2-size: 1.55em;
+  --h2-weight: 700;
+  --h2-line-height: 1.15;
+  --h3-size: 1.12em;
+  --h3-weight: 700;
+  --h3-line-height: 1.25;
+  --h4-size: 0.78em;
+  --h4-weight: 800;
+  --h4-line-height: 1.4;
+  --h5-size: 0.72em;
+  --h5-weight: 800;
+  --h5-line-height: 1.4;
+  --h6-size: 0.68em;
+  --h6-weight: 800;
+  --h6-line-height: 1.4;
+  --inline-title-size: clamp(2.1em, 5vw, 2.8em);
+  --inline-title-weight: 800;
+  --inline-title-line-height: 1.02;
+  --inline-title-margin-bottom: 0.6em;
+
+  /* Bausteine */
+  --blockquote-border-thickness: 3px;
+  --blockquote-font-style: normal;
+  --hr-thickness: 1px;
+  --link-decoration: underline;
+  --link-decoration-hover: underline;
+  --link-decoration-thickness: 1.5px;
+  --link-external-decoration: underline;
+  --link-external-decoration-hover: underline;
+  --link-unresolved-decoration-style: dashed;
+  --link-unresolved-opacity: 1;
+  --link-unresolved-filter: none;
+  --tag-size: 0.8em;
+  --tag-weight: 500;
+  --tag-border-width: 1px;
+  --tag-padding-x: 0.75em;
+  --tag-padding-y: 0.2em;
+  --tag-decoration: none;
+  --tag-decoration-hover: none;
+  --pill-border-width: 1px;
+  --pill-decoration: none;
+  --table-header-weight: 700;
+  --table-header-size: 0.72em;
+  --table-text-size: 0.9em;
+  --table-border-width: 1px;
+  --table-header-border-width: 1px;
+  --table-cell-padding: 0.55em 0.8em;
+  --code-size: 0.88em;
+  --callout-border-width: 1px;
+  --callout-border-opacity: 1;
+  --callout-padding: 0;
+  --callout-blend-mode: normal;
+  --checklist-done-decoration: none;
+  --sidebar-markdown-font-size: 0.88em;
+  --nav-item-weight-active: 600;
+  --metadata-label-font-size: 0.85em;
+  --status-bar-position: fixed;
+  --status-bar-radius: 999px;
+  --status-bar-font-size: 0.72em;
+  --status-bar-border-width: 1px;
+  --prompt-border-width: 1px;
+  --modal-border-width: 1px;
+}
+
+/* =========================================================
+   3. Farben auf Obsidians Variablen
+   ========================================================= */
+
+.theme-light,
+.theme-dark {
+  --mono-rgb-0: var(--hanko-flaeche-rgb);
+  --mono-rgb-100: var(--hanko-tinte-rgb);
+
+  /* Grundtöne: Rot, Ocker, Grün, Blau, Pflaume ersetzen den bunten Satz */
+  --color-red-rgb: var(--hanko-rot-rgb);
+  --color-red: var(--hanko-rot);
+  --color-orange-rgb: var(--hanko-ocker-rgb);
+  --color-orange: var(--hanko-ocker);
+  --color-yellow-rgb: var(--hanko-ocker-rgb);
+  --color-yellow: var(--hanko-ocker);
+  --color-green-rgb: var(--hanko-ok-rgb);
+  --color-green: var(--hanko-ok);
+  --color-cyan-rgb: var(--hanko-indigo-rgb);
+  --color-cyan: var(--hanko-indigo);
+  --color-blue-rgb: var(--hanko-indigo-rgb);
+  --color-blue: var(--hanko-indigo);
+  --color-purple-rgb: var(--hanko-pflaume-rgb);
+  --color-purple: var(--hanko-pflaume);
+  --color-pink-rgb: var(--hanko-pflaume-rgb);
+  --color-pink: var(--hanko-pflaume);
+
+  /* Flächen */
+  --background-primary: var(--hanko-flaeche);
+  --background-primary-alt: var(--hanko-papier);
+  --background-secondary: var(--hanko-grund);
+  --background-secondary-alt: var(--hanko-flaeche-2);
+  --background-modifier-hover: rgba(var(--hanko-tinte-rgb), 0.05);
+  --background-modifier-active-hover: rgba(var(--hanko-tinte-rgb), 0.08);
+  --background-modifier-border: var(--hanko-linie);
+  --background-modifier-border-hover: var(--hanko-tinte-3);
+  --background-modifier-border-focus: var(--hanko-rot);
+  --background-modifier-form-field: var(--hanko-flaeche);
+  --background-modifier-error: var(--hanko-tinte);
+  --background-modifier-error-hover: var(--hanko-tinte-2);
+  --background-modifier-success: rgba(var(--hanko-ok-rgb), 0.15);
+  --background-modifier-message: var(--hanko-tinte);
+  --workspace-background-translucent: rgba(var(--hanko-grund-rgb), 0.85);
+
+  /* Tinte */
+  --text-normal: var(--hanko-tinte);
+  --text-muted: var(--hanko-tinte-2);
+  --text-faint: var(--hanko-tinte-3);
+  --text-on-accent: var(--hanko-papier);
+  --text-on-accent-inverted: var(--hanko-tinte);
+  --text-error: var(--hanko-tinte);
+  --text-warning: var(--hanko-ocker);
+  --text-success: var(--hanko-ok);
+  --text-selection: rgba(var(--hanko-rot-rgb), 0.16);
+  --text-highlight-bg: rgba(var(--hanko-rot-rgb), 0.22);
+  --text-highlight-bg-active: rgba(var(--hanko-rot-rgb), 0.4);
+  --text-accent: var(--hanko-tinte);
+  --text-accent-hover: var(--hanko-rot);
+
+  /* Akzent: Rot für „jetzt handeln“, Knöpfe in Tinte.
+     Auch die HSL-Werte, damit die Akzentfarbe aus den Einstellungen nicht durchscheint. */
+  --color-accent-hsl: var(--hanko-rot-hsl);
+  --interactive-accent-hsl: var(--hanko-rot-hsl);
+  --color-accent: var(--hanko-rot);
+  --color-accent-1: var(--hanko-rot);
+  --color-accent-2: var(--hanko-rot);
+  --interactive-normal: var(--hanko-flaeche);
+  --interactive-hover: var(--hanko-flaeche-2);
+  --interactive-accent: var(--hanko-tinte);
+  --interactive-accent-hover: var(--hanko-tinte-2);
+  --interactive-success: var(--hanko-ok);
+  --input-shadow: inset 0 0 0 1px var(--hanko-linie);
+  --input-shadow-hover: inset 0 0 0 1px var(--hanko-tinte-3);
+  --shadow-s: var(--hanko-schatten);
+  --shadow-l: var(--hanko-schatten);
+
+  /* Gerüst */
+  --divider-color: rgba(var(--hanko-tinte-rgb), 0.09);
+  --divider-color-hover: var(--hanko-tinte-3);
+  --titlebar-background: var(--hanko-grund);
+  --titlebar-background-focused: var(--hanko-grund);
+  --titlebar-border-color: var(--hanko-linie);
+  --titlebar-text-color: var(--hanko-tinte-2);
+  --titlebar-text-color-focused: var(--hanko-tinte);
+  --tab-container-background: var(--hanko-grund);
+  --tab-background-active: var(--hanko-flaeche);
+  --tab-text-color: var(--hanko-tinte-3);
+  --tab-text-color-active: var(--hanko-tinte-2);
+  --tab-text-color-focused: var(--hanko-tinte-2);
+  --tab-text-color-focused-active: var(--hanko-tinte);
+  --tab-text-color-focused-active-current: var(--hanko-tinte);
+  --tab-text-color-focused-highlighted: var(--hanko-tinte);
+  --tab-outline-color: var(--hanko-linie);
+  --tab-divider-color: var(--hanko-linie);
+  --sidebar-tab-text-color: var(--hanko-tinte-3);
+  --sidebar-tab-text-color-active: var(--hanko-tinte);
+  --ribbon-background: var(--hanko-grund);
+  --ribbon-background-active: var(--hanko-flaeche-2);
+  --ribbon-foreground: var(--hanko-tinte-2);
+  --ribbon-foreground-active: var(--hanko-tinte);
+  --icon-color: var(--hanko-tinte-2);
+  --icon-color-hover: var(--hanko-tinte);
+  --icon-color-active: var(--hanko-tinte);
+  --icon-color-focused: var(--hanko-tinte);
+  --icon-opacity: 1;
+  --status-bar-background: var(--hanko-glas);
+  --status-bar-border-color: var(--hanko-glas-rand);
+  --status-bar-text-color: var(--hanko-tinte-2);
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb-bg: rgba(var(--hanko-tinte-rgb), 0.15);
+  --scrollbar-active-thumb-bg: rgba(var(--hanko-tinte-rgb), 0.3);
+
+  /* Navigation */
+  --nav-item-color: var(--hanko-tinte-2);
+  --nav-item-color-hover: var(--hanko-tinte);
+  --nav-item-color-active: var(--hanko-tinte);
+  --nav-item-color-selected: var(--hanko-tinte);
+  --nav-item-color-highlighted: var(--hanko-tinte);
+  --nav-item-background-hover: var(--hanko-flaeche-2);
+  --nav-item-background-active: var(--hanko-flaeche);
+  --nav-item-background-selected: rgba(var(--hanko-tinte-rgb), 0.08);
+  --nav-indentation-guide-color: var(--hanko-linie);
+  --nav-collapse-icon-color: var(--hanko-tinte-3);
+  --nav-heading-color: var(--hanko-tinte-3);
+  --collapse-icon-color: var(--hanko-tinte-3);
+  --collapse-icon-color-collapsed: var(--hanko-tinte-2);
+  --indentation-guide-color: var(--hanko-linie);
+  --indentation-guide-color-active: var(--hanko-tinte-3);
+  --search-icon-color: var(--hanko-tinte-3);
+  --search-clear-button-color: var(--hanko-tinte-3);
+  --vault-name-color: var(--hanko-tinte);
+
+  /* Inhalt */
+  --bold-color: var(--hanko-fett);
+  --h1-color: var(--hanko-tinte);
+  --h2-color: var(--hanko-tinte);
+  --h3-color: var(--hanko-tinte);
+  --h4-color: var(--hanko-tinte-2);
+  --h5-color: var(--hanko-tinte-2);
+  --h6-color: var(--hanko-tinte-3);
+  --inline-title-color: var(--hanko-tinte);
+  --link-color: var(--hanko-tinte);
+  --link-color-hover: var(--hanko-rot);
+  --link-external-color: var(--hanko-tinte);
+  --link-external-color-hover: var(--hanko-rot);
+  --link-unresolved-color: var(--hanko-tinte-2);
+  --link-unresolved-decoration-color: var(--hanko-tinte-3);
+  --list-marker-color: var(--hanko-tinte-3);
+  --hr-color: var(--hanko-linie);
+  --blockquote-border-color: var(--hanko-tinte);
+  --blockquote-color: var(--hanko-tinte);
+  --blockquote-background-color: transparent;
+  --tag-color: var(--hanko-tinte-2);
+  --tag-color-hover: var(--hanko-tinte);
+  --tag-background: transparent;
+  --tag-background-hover: var(--hanko-flaeche-2);
+  --tag-border-color: var(--hanko-linie);
+  --tag-border-color-hover: var(--hanko-tinte-3);
+  --pill-color: var(--hanko-tinte-2);
+  --pill-color-hover: var(--hanko-tinte);
+  --pill-color-remove: var(--hanko-tinte);
+  --pill-background: transparent;
+  --pill-background-hover: var(--hanko-flaeche-2);
+  --pill-border-color: var(--hanko-linie);
+  --checkbox-color: var(--hanko-ok);
+  --checkbox-color-hover: var(--hanko-ok);
+  --checkbox-border-color: var(--hanko-tinte-3);
+  --checkbox-border-color-hover: var(--hanko-tinte);
+  --checkbox-marker-color: var(--hanko-papier);
+  --checklist-done-color: var(--hanko-tinte-3);
+  --embed-background: var(--hanko-papier);
+  --table-background: transparent;
+  --table-header-background: transparent;
+  --table-header-color: var(--hanko-tinte-3);
+  --table-header-border-color: var(--hanko-tinte);
+  --table-border-color: var(--hanko-linie);
+  --table-row-background-hover: rgba(var(--hanko-tinte-rgb), 0.03);
+  --table-row-alt-background: transparent;
+  --table-selection: rgba(var(--hanko-rot-rgb), 0.12);
+  --metadata-background: transparent;
+  --metadata-border-color: transparent;
+  --metadata-label-text-color: var(--hanko-tinte-3);
+  --metadata-label-text-color-hover: var(--hanko-tinte-2);
+  --metadata-input-text-color: var(--hanko-tinte);
+  --metadata-divider-color: var(--hanko-linie);
+  --metadata-divider-color-hover: var(--hanko-linie);
+  --metadata-divider-color-focus: var(--hanko-rot);
+  --metadata-property-background-hover: var(--hanko-flaeche-2);
+
+  /* Code: fünf Töne als Rollen */
+  --code-background: var(--hanko-flaeche-2);
+  --code-normal: var(--hanko-tinte);
+  --code-comment: var(--hanko-tinte-3);
+  --code-function: var(--hanko-indigo);
+  --code-important: var(--hanko-rot);
+  --code-keyword: var(--hanko-indigo);
+  --code-operator: var(--hanko-tinte-2);
+  --code-property: var(--hanko-pflaume);
+  --code-punctuation: var(--hanko-tinte-2);
+  --code-string: var(--hanko-ocker);
+  --code-tag: var(--hanko-pflaume);
+  --code-value: var(--hanko-ok);
+
+  /* Callouts: eine Farbe, eine Aufgabe */
+  --callout-default: var(--hanko-tinte-2-rgb);
+  --callout-quote: var(--hanko-tinte-2-rgb);
+  --callout-bug: var(--hanko-tinte-2-rgb);
+  --callout-fail: var(--hanko-tinte-2-rgb);
+  --callout-info: var(--hanko-indigo-rgb);
+  --callout-summary: var(--hanko-indigo-rgb);
+  --callout-todo: var(--hanko-indigo-rgb);
+  --callout-example: var(--hanko-indigo-rgb);
+  --callout-tip: var(--hanko-ocker-rgb);
+  --callout-important: var(--hanko-ocker-rgb);
+  --callout-warning: var(--hanko-ocker-rgb);
+  --callout-question: var(--hanko-pflaume-rgb);
+  --callout-success: var(--hanko-ok-rgb);
+  --callout-error: var(--hanko-rot-rgb);
+
+  /* Schwebendes */
+  --modal-background: var(--hanko-flaeche);
+  --modal-border-color: var(--hanko-linie);
+  --prompt-border-color: var(--hanko-glas-rand);
+
+  /* Graph und Canvas */
+  --graph-text: var(--hanko-tinte-2);
+  --graph-line: var(--hanko-linie);
+  --graph-node: var(--hanko-tinte-2);
+  --graph-node-unresolved: var(--hanko-tinte-3);
+  --graph-node-focused: var(--hanko-rot);
+  --graph-node-tag: var(--hanko-ocker);
+  --graph-node-attachment: var(--hanko-indigo);
+  --canvas-background: var(--hanko-papier);
+  --canvas-dot-pattern: var(--hanko-linie);
+  /* Canvas: die vier Farben der Ordner-Tafel (hell 279, dunkel 293),
+     dazu Signalrot und Grau. Farbe 1 ist die Ankerfarbe Raw Sienna. */
+  --canvas-color-1: var(--hanko-tafel-1-rgb);
+  --canvas-color-2: var(--hanko-tafel-2-rgb);
+  --canvas-color-3: var(--hanko-tafel-3-rgb);
+  --canvas-color-4: var(--hanko-tafel-4-rgb);
+  --canvas-color-5: var(--hanko-rot-rgb);
+  --canvas-color-6: var(--hanko-tinte-3-rgb);
+
+  /* Rotes Element der Hanko-Schablonen im Icon-Paket für Iconize */
+  --hanko-ikon-akzent: var(--hanko-rot);
+}
+
+/* =========================================================
+   4. Gerüst
+   ========================================================= */
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.workspace-tab-header-container {
+  border-bottom: 1px solid var(--hanko-linie);
+}
+
+.view-header {
+  border-bottom: none;
+}
+
+.view-header-title {
+  font-size: 0.8em;
+  color: var(--hanko-tinte-3);
+}
+
+.workspace-leaf.mod-active .view-header-title {
+  color: var(--hanko-tinte-2);
+}
+
+/* Navigation als Pillen */
+.nav-folder-title,
+.nav-file-title,
+.vertical-tab-nav-item {
+  border-radius: 999px;
+}
+
+.nav-folder-title {
+  font-weight: 500;
+}
+
+.vertical-tab-nav-item.is-active {
+  background-color: var(--hanko-flaeche-2);
+  font-weight: 600;
+}
+
+/* Suchfelder in Pillenform */
+.search-input-container input,
+input.prompt-input {
+  border-radius: 999px;
+}
+
+/* Fokus: Rot, außerhalb des Editors */
+button:focus-visible,
+.clickable-icon:focus-visible,
+a:focus-visible,
+.tree-item-self:focus-visible {
+  outline: 2px solid var(--hanko-rot);
+  outline-offset: 2px;
+}
+
+/* Rollbalken: schmal, sichtbar bei Berührung */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-active-thumb-bg);
+}
+
+body.hanko-rollbalken-aus ::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   5. Glas: nur für Schwebendes
+   ========================================================= */
+
+.menu,
+.suggestion-container,
+.prompt,
+.notice,
+.status-bar,
+.mobile-navbar,
+.mobile-toolbar {
+  background-color: var(--hanko-glas);
+  border: 1px solid var(--hanko-glas-rand);
+  box-shadow: inset 0 1px 0 var(--hanko-glas-rand), var(--hanko-schatten);
+}
+
+body:not(.hanko-kein-glas) .menu,
+body:not(.hanko-kein-glas) .suggestion-container,
+body:not(.hanko-kein-glas) .prompt,
+body:not(.hanko-kein-glas) .notice,
+body:not(.hanko-kein-glas) .status-bar,
+body:not(.hanko-kein-glas) .mobile-navbar,
+body:not(.hanko-kein-glas) .mobile-toolbar {
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  backdrop-filter: saturate(180%) blur(22px);
+}
+
+body.hanko-kein-glas .menu,
+body.hanko-kein-glas .suggestion-container,
+body.hanko-kein-glas .prompt,
+body.hanko-kein-glas .notice,
+body.hanko-kein-glas .status-bar,
+body.hanko-kein-glas .mobile-navbar,
+body.hanko-kein-glas .mobile-toolbar {
+  background-color: var(--hanko-flaeche);
+  border-color: var(--hanko-linie);
+}
+
+.menu {
+  border-radius: 14px;
+  padding: 6px;
+}
+
+.menu-item {
+  border-radius: 10px;
+}
+
+.menu-separator {
+  border-color: var(--hanko-linie);
+}
+
+.suggestion-container {
+  border-radius: 14px;
+}
+
+.suggestion-item.is-selected {
+  border-radius: 10px;
+}
+
+.prompt {
+  border-radius: var(--hanko-radius-erhoeht);
+}
+
+.notice {
+  border-radius: 14px;
+  color: var(--hanko-tinte);
+}
+
+/* Fußleiste als Glaspille */
+body:not(.hanko-fussleiste-fest) .status-bar {
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0 0.5rem;
+}
+
+body.hanko-fussleiste-fest .status-bar {
+  border-radius: var(--radius-m) 0 0 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+/* Vorschau beim Überfahren: Lesefläche, kein Glas */
+.popover.hover-popover {
+  background-color: var(--hanko-flaeche);
+  border: 1px solid var(--hanko-linie);
+  border-radius: var(--hanko-radius);
+  box-shadow: var(--hanko-schatten);
+}
+
+/* Handy: Leiste unten als Glaspille. Die schwebende Leiste neuerer
+   Obsidian-Versionen (is-floating-nav) positioniert sich selbst. */
+body.is-mobile:not(.is-floating-nav) .mobile-navbar {
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  border-radius: 26px;
+}
+
+/* =========================================================
+   6. Bedienung: Knöpfe, Schalter, Häkchen
+   ========================================================= */
+
+button:not(.clickable-icon) {
+  font-weight: 500;
+  color: var(--hanko-tinte-2);
+}
+
+button:not(.clickable-icon):hover {
+  color: var(--hanko-tinte);
+}
+
+button.mod-cta,
+button.mod-warning {
+  background-color: var(--hanko-tinte);
+  color: var(--hanko-papier);
+  box-shadow: none;
+}
+
+button.mod-cta:hover,
+button.mod-warning:hover {
+  background-color: var(--hanko-tinte-2);
+  color: var(--hanko-papier);
+}
+
+/* Kippschalter: Gesperrt grau, Freigeschaltet grün */
+.checkbox-container {
+  background-color: var(--hanko-tinte-3);
+}
+
+.checkbox-container.is-enabled {
+  background-color: var(--hanko-ok);
+}
+
+/* Erledigt: grüner Kreis mit Haken, nichts durchgestrichen */
+input[type="checkbox"] {
+  border-width: 1.5px;
+}
+
+/* =========================================================
+   7. Inhalt
+   ========================================================= */
+
+/* Titel */
+.inline-title {
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+/* Überschriften: groß und eng */
+.markdown-rendered h1,
+.cm-s-obsidian .HyperMD-header-1 {
+  letter-spacing: -0.03em;
+}
+
+.markdown-rendered h2,
+.cm-s-obsidian .HyperMD-header-2 {
+  letter-spacing: -0.02em;
+}
+
+.markdown-rendered h3,
+.cm-s-obsidian .HyperMD-header-3 {
+  letter-spacing: -0.01em;
+}
+
+body:not(.hanko-keine-h2-linie) .markdown-rendered h2,
+body:not(.hanko-keine-h2-linie) .cm-s-obsidian .HyperMD-header-2 {
+  border-top: 1px solid var(--hanko-linie);
+  padding-top: 1.2em;
+}
+
+body:not(.hanko-keine-h2-linie) .markdown-rendered .inline-title + h2 {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* H4 bis H6 als Beschriftung: Versalien, gesperrt */
+.markdown-rendered h4,
+.markdown-rendered h5,
+.markdown-rendered h6,
+.cm-s-obsidian .HyperMD-header-4,
+.cm-s-obsidian .HyperMD-header-5,
+.cm-s-obsidian .HyperMD-header-6 {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* Links: Text in Tinte, Unterstreichung rot */
+.markdown-rendered a.internal-link,
+.markdown-rendered a.external-link,
+.markdown-rendered a.tag,
+.cm-s-obsidian span.cm-hmd-internal-link .cm-underline,
+.cm-s-obsidian span.cm-link .cm-underline,
+.cm-s-obsidian span.cm-url {
+  text-decoration-color: var(--hanko-rot);
+  text-underline-offset: 0.18em;
+}
+
+.markdown-rendered a.tag {
+  text-decoration: none;
+}
+
+.markdown-rendered a.internal-link.is-unresolved,
+.cm-s-obsidian span.cm-hmd-internal-link.is-unresolved .cm-underline {
+  text-decoration-color: var(--hanko-tinte-3);
+  text-decoration-style: dashed;
+}
+
+/* Zitate: Strich in Tinte, nicht kursiv */
+.markdown-rendered blockquote,
+.cm-s-obsidian .HyperMD-quote {
+  font-size: 1.05em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.markdown-rendered blockquote {
+  padding-left: 1.1em;
+  margin: 1.4em 0;
+}
+
+/* Fundstellen und Markierungen: rot hinterlegt, Text in Tinte */
+.markdown-rendered mark,
+.cm-s-obsidian span.cm-highlight,
+.search-result-file-matched-text {
+  background-color: var(--text-highlight-bg);
+  color: inherit;
+  border-radius: 3px;
+}
+
+/* Fett: farblich abgehoben, Überschriften bleiben Tinte */
+.markdown-rendered strong,
+.markdown-rendered b,
+.cm-s-obsidian span.cm-strong {
+  color: var(--hanko-fett);
+}
+
+.cm-s-obsidian span.cm-formatting-strong {
+  color: rgba(var(--hanko-fett-rgb), 0.45);
+}
+
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6, th) :is(strong, b),
+.cm-s-obsidian span.cm-header.cm-strong,
+.cm-s-obsidian span.cm-header.cm-formatting-strong {
+  color: inherit;
+}
+
+/* Trennlinie */
+.markdown-rendered hr {
+  margin: 2.5em 0;
+}
+
+/* Bilder */
+.markdown-rendered img:not(.emoji) {
+  border-radius: 10px;
+}
+
+/* Tabellen: Kopf als Beschriftung, nur Haarlinien quer */
+.markdown-rendered th {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: left;
+  border-width: 0 0 1px 0;
+  border-bottom-color: var(--hanko-tinte);
+  white-space: nowrap;
+}
+
+.markdown-rendered td {
+  border-width: 0 0 1px 0;
+  vertical-align: top;
+}
+
+.markdown-rendered table {
+  border-collapse: collapse;
+}
+
+/* Eingebettete Notizen: flache Karte */
+.markdown-embed,
+.file-embed {
+  background-color: var(--hanko-papier);
+  border: 1px solid var(--hanko-linie);
+  border-radius: var(--hanko-radius);
+  padding: 1em 1.2em;
+  margin: 1em 0;
+}
+
+.markdown-embed .markdown-embed-link,
+.markdown-embed .markdown-embed-edit-link {
+  color: var(--hanko-tinte-3);
+}
+
+/* Eigenschaften: Haarlinie darunter, Kopf als Beschriftung */
+.metadata-container {
+  border-bottom: 1px solid var(--hanko-linie);
+  padding-bottom: 0.8em;
+  margin-bottom: 1.4em;
+}
+
+.metadata-properties-title {
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+}
+
+.metadata-property-icon {
+  color: var(--hanko-tinte-3);
+}
+
+.metadata-add-button {
+  color: var(--hanko-tinte-3);
+}
+
+/* Code */
+.markdown-rendered pre,
+.cm-s-obsidian .HyperMD-codeblock {
+  border: 1px solid var(--hanko-linie);
+  border-radius: 10px;
+}
+
+.cm-s-obsidian .HyperMD-codeblock {
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+}
+
+.cm-s-obsidian .HyperMD-codeblock-begin {
+  border-top: 1px solid var(--hanko-linie);
+  border-radius: 10px 10px 0 0;
+}
+
+.cm-s-obsidian .HyperMD-codeblock-end {
+  border-bottom: 1px solid var(--hanko-linie);
+  border-radius: 0 0 10px 10px;
+}
+
+.markdown-rendered .copy-code-button {
+  border-radius: 999px;
+  border: 1px solid var(--hanko-linie);
+  background-color: var(--hanko-flaeche);
+  color: var(--hanko-tinte-2);
+}
+
+/* =========================================================
+   8. Callouts: flache Karte, Zeichen in Farbe, Titel in Tinte
+   ========================================================= */
+
+.callout {
+  background-color: var(--hanko-papier);
+  border: 1px solid var(--hanko-linie);
+  border-radius: var(--hanko-radius);
+  padding: 0;
+  overflow: hidden;
+}
+
+.callout .callout-title {
+  padding: 0.9em 1.1em;
+  gap: 0.6em;
+  align-items: center;
+  background-color: transparent;
+  color: var(--hanko-tinte-2);
+}
+
+body:not(.hanko-callout-normal) .callout .callout-title-inner {
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body.hanko-callout-normal .callout .callout-title-inner {
+  font-size: 1em;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.callout .callout-icon {
+  color: rgb(var(--callout-color));
+}
+
+.callout .callout-fold {
+  color: var(--hanko-tinte-3);
+}
+
+.callout .callout-content {
+  padding: 0 1.1em 1em;
+  background-color: transparent;
+}
+
+.callout.is-collapsed .callout-title {
+  padding-bottom: 0.9em;
+}
+
+/* Callout in Callout: Fläche statt Papier, damit die Stufe sichtbar bleibt */
+.callout .callout {
+  background-color: var(--hanko-flaeche);
+}
+
+/* =========================================================
+   9. Einstellungen und Fenster
+   ========================================================= */
+
+.modal {
+  box-shadow: var(--hanko-schatten);
+}
+
+.modal.mod-settings .vertical-tab-header {
+  background-color: var(--hanko-grund);
+  border-right: 1px solid var(--hanko-linie);
+}
+
+.setting-item {
+  border-top: 1px solid var(--hanko-linie);
+}
+
+.setting-item-heading {
+  border-top: none;
+}
+
+.setting-item-heading .setting-item-name {
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-2);
+}
+
+/* =========================================================
+   10. Siegel: das eine rote Zeichen
+   ========================================================= */
+
+/* Auf Notizen, die du abzeichnest: Eigenschaft cssclasses mit dem Wert seal.
+   Mit dem Schalter „Siegel auf jeder Notiz“ überall. Oben rechts, wie ein
+   Stempel auf einem Blatt. Ohne Inline-Titel bekommt der Abdruck einen
+   eigenen Streifen, mit Inline-Titel steht er rechts neben dem Titel. */
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer,
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer,
+body:not(.hanko-kein-abdruck) .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer,
+body:not(.hanko-kein-abdruck) .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view.seal > .markdown-preview-sizer {
+  position: relative;
+}
+
+body:not(.hanko-kein-abdruck):not(.show-inline-title).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer,
+body:not(.hanko-kein-abdruck):not(.show-inline-title).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer,
+body:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer,
+body:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view.seal > .markdown-preview-sizer {
+  padding-top: 4.4rem;
+}
+
+body:not(.hanko-kein-abdruck).show-inline-title.hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer .inline-title,
+body:not(.hanko-kein-abdruck).show-inline-title.hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer .inline-title,
+body:not(.hanko-kein-abdruck).show-inline-title .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer .inline-title,
+body:not(.hanko-kein-abdruck).show-inline-title .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view.seal > .markdown-preview-sizer .inline-title {
+  padding-inline-end: 5rem;
+}
+
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer::before,
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck) .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer::before,
+body:not(.hanko-kein-abdruck) .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view.seal > .markdown-preview-sizer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0.2rem;
+  width: var(--hanko-siegel-groesse);
+  height: var(--hanko-siegel-groesse);
+  z-index: 1;
+  background-color: var(--hanko-rot);
+  -webkit-mask: var(--hanko-siegel) center / contain no-repeat;
+  mask: var(--hanko-siegel) center / contain no-repeat;
+  transform: rotate(-7deg);
+  pointer-events: none;
+}
+
+body:not(.hanko-kein-abdruck) .empty-state-container::before,
+body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
+  content: "";
+  background-color: var(--hanko-rot);
+  -webkit-mask: var(--hanko-siegel) center / contain no-repeat;
+  mask: var(--hanko-siegel) center / contain no-repeat;
+  transform: rotate(-7deg);
+  pointer-events: none;
+}
+
+/* Hell: Stempelfarbe zieht ins Papier ein, Tinte darunter bleibt lesbar */
+.theme-light .cm-sizer::before,
+.theme-light .markdown-preview-sizer::before,
+.theme-light .empty-state-container::before {
+  mix-blend-mode: multiply;
+}
+
+/* Dunkel: ein Hauch weniger Deckkraft, damit der Abdruck nicht leuchtet */
+.theme-light {
+  --hanko-siegel-deckkraft: 1;
+}
+
+.theme-dark {
+  --hanko-siegel-deckkraft: 0.94;
+}
+
+/* Aufsetzen: einmal kurz, wenn eine Notiz geöffnet wird */
+@keyframes hanko-aufsetzen {
+  0% { opacity: 0; transform: rotate(-13deg) scale(1.35); }
+  60% { opacity: var(--hanko-siegel-deckkraft, 1); transform: rotate(-6deg) scale(0.96); }
+  100% { opacity: var(--hanko-siegel-deckkraft, 1); transform: rotate(-7deg) scale(1); }
+}
+
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer::before,
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer::before,
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view.seal > .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .empty-state-container::before {
+  animation: var(--hanko-aufsetzen, hanko-aufsetzen 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --hanko-aufsetzen: none;
+  }
+}
+
+body:not(.hanko-kein-abdruck) .cm-sizer::before,
+body:not(.hanko-kein-abdruck) .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck) .empty-state-container::before,
+body:not(.hanko-kein-abdruck) .home-tab-logo::before {
+  opacity: var(--hanko-siegel-deckkraft, 1);
+}
+
+/* Leerer Tab: der Abdruck groß über den Aktionen */
+body:not(.hanko-kein-abdruck) .empty-state-container::before {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto 0.5rem;
+}
+
+.empty-state-title {
+  letter-spacing: -0.03em;
+}
+
+.empty-state-action {
+  color: var(--hanko-tinte-2);
+}
+
+.empty-state-action:hover {
+  color: var(--hanko-tinte);
+  text-decoration: underline;
+  text-decoration-color: var(--hanko-rot);
+  text-underline-offset: 0.18em;
+}
+
+/* Neuer Tab mit dem Plugin Home Tab: Siegel statt Obsidian-Logo */
+body:not(.hanko-kein-abdruck) .home-tab-logo > svg {
+  display: none;
+}
+
+body:not(.hanko-kein-abdruck) .home-tab-logo:has(> svg)::before {
+  content: "";
+  display: block;
+  width: 4.6rem;
+  height: 4.6rem;
+  background-color: var(--hanko-rot);
+  -webkit-mask: var(--hanko-siegel) center / contain no-repeat;
+  mask: var(--hanko-siegel) center / contain no-repeat;
+  transform: rotate(-7deg);
+}
+
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .home-tab-logo:has(> svg)::before {
+  animation: var(--hanko-aufsetzen, hanko-aufsetzen 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both);
+}
+
+.theme-light .home-tab-logo::before {
+  mix-blend-mode: multiply;
+}
+
+.home-tab-wordmark-container h1 {
+  color: var(--hanko-tinte);
+  letter-spacing: -0.045em;
+}
+
+.home-tab-searchbar {
+  --input-radius: 999px;
+  padding-inline: 0.9em;
+}
+
+body .home-tab .home-tab-suggestion-container {
+  border-radius: 0 0 var(--hanko-radius) var(--hanko-radius);
+}
+
+.home-tab-file-item {
+  border-radius: var(--hanko-radius);
+}
+
+.home-tab-file-item:hover {
+  background-color: var(--hanko-flaeche-2);
+}
+
+.home-tab-file-item-preview-icon {
+  color: var(--hanko-tinte-2);
+}
+
+/* Name des Tresors: kleiner Abdruck als Marke */
+body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-inline-end: 0.45em;
+  vertical-align: -0.18em;
+}
+
+.workspace-drawer-vault-name {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   11. Orte: die oberste Ordnerebene auf Wadas Tafeln Nr. 279 und Nr. 293
+   ========================================================= */
+
+/* Jeder Ordner der obersten Ebene ist ein Ort mit einer Farbe der Tafel:
+   hell Nr. 279, dunkel Nr. 293.
+   Die Farbe hängt am ersten Zeichen des Namens (Ziffer oder Buchstabe),
+   nicht an der Position. So bleibt sie beim Scrollen stabil.
+   Ohne passenden Ton und im Archiv: Beton. */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-beton-rgb);
+  --hanko-ort-schrift: var(--hanko-beton-schrift);
+  --hanko-ort-dichte: 1;
+}
+
+/* Ton 1: Raw Sienna, die Ankerfarbe, hell und dunkel */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="1"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="5"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="9"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="a" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="e" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="i" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="j" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="n" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="u" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="y" i]:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-tafel-1-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-1-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-1-dichte, 1);
+}
+
+/* Ton 2: hell Dark Tyrian Blue (Ausweiche Eosine Pink), dunkel Green */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="2"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="6"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="0"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="b" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="f" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="k" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="o" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="r" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="v" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="z" i]:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-tafel-2-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-2-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-2-dichte, 1);
+}
+
+/* Ton 3: hell Ecru, dunkel Artemesia Green */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="3"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="7"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="d" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="g" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="l" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="p" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="s" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="w" i]:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-tafel-3-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-3-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-3-dichte, 1);
+}
+
+/* Ton 4: hell Vinaceous Cinnamon, dunkel Turquoise Green */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="4"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="8"]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="c" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="h" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="m" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="q" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="t" i]:not([data-path*="/"])),
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="x" i]:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-tafel-4-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-4-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-4-dichte, 1);
+}
+
+/* Archiv: Beton, wie vergangene Blöcke im Fahrplan */
+.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path*="archiv" i]:not([data-path*="/"])) {
+  --hanko-ort-rgb: var(--hanko-beton-rgb);
+  --hanko-ort-schrift: var(--hanko-beton-schrift);
+  --hanko-ort-dichte: 1;
+}
+
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+  --nav-item-background-hover: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-hover) * var(--hanko-ort-dichte)));
+  --nav-item-background-active: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-aktiv) * var(--hanko-ort-dichte)));
+  --nav-item-background-selected: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-aktiv) * var(--hanko-ort-dichte)));
+  --nav-indentation-guide-color: rgba(var(--hanko-ort-rgb), min(1, calc(var(--hanko-ort-linie) * var(--hanko-ort-dichte))));
+  background-color: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-flaeche) * var(--hanko-ort-dichte)));
+  border-radius: 15px;
+  margin-bottom: 3px;
+}
+
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])):not(.is-collapsed) {
+  padding-bottom: 4px;
+}
+
+/* Kopf des Ortes: deckende Pille in der Farbe der Tafel */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title {
+  --icon-color: var(--hanko-ort-schrift);
+  --nav-collapse-icon-color: var(--hanko-ort-schrift);
+  --collapse-icon-color: var(--hanko-ort-schrift);
+  --collapse-icon-color-collapsed: var(--hanko-ort-schrift);
+  background-color: rgb(var(--hanko-ort-rgb));
+  color: var(--hanko-ort-schrift);
+  font-weight: 650;
+}
+
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title :is(.collapse-icon, .iconize-icon, .tree-item-icon) {
+  color: var(--hanko-ort-schrift);
+  opacity: 0.85;
+}
+
+body:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+  color: var(--hanko-ort-schrift);
+  background-color: rgb(var(--hanko-ort-rgb));
+  filter: brightness(0.94);
+}
+
+.theme-dark:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+  filter: brightness(1.12);
+}
+
+/* Zart: die Tafel als durchscheinende Fläche, Namen in Tinte */
+body.hanko-ordner-zart:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title,
+body.hanko-ordner-zart:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+  --hanko-ort-schrift: var(--hanko-tinte);
+  background-color: rgba(var(--hanko-ort-rgb), min(0.85, calc(var(--hanko-ort-zart) * var(--hanko-ort-dichte))));
+  color: var(--hanko-tinte);
+}
+
+/* Geöffnete Notiz im Ort: Fläche im Ton, Schrift in Tinte */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder-children .tree-item-self.is-active {
+  color: var(--hanko-tinte);
+  font-weight: 650;
+}
+
+/* Unterordner: Name in Tinte, Führungslinie im Ton */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder .nav-folder-title {
+  color: var(--hanko-tinte);
+}
+
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder-children :is(.collapse-icon, .tree-item-icon, .iconize-icon) {
+  color: var(--hanko-tinte-3);
+}
+
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-children {
+  border-inline-start-width: 2px;
+}
+
+/* Lesezeichen: Gruppen tragen eine schmale Marke statt Fläche */
+[data-type="bookmarks"] .tree-item-self.mod-collapsible .tree-item-inner {
+  font-weight: 600;
+}
+
+/* =========================================================
+   12. Plugins: Farben aus dem Plugin auf Wada-Töne
+   ========================================================= */
+
+/* Keep the Rhythm: Heatmap und Fortschritt in vier Grüntönen aus Wadas Buch
+   statt GitHub-Grün. Grün ist „Bestätigung“: geschrieben ist geschrieben.
+   Die Werte stehen am Container, damit sie die Einstellungen des Plugins
+   (am body gesetzt) überstimmen. */
+.theme-light :is(.heatmap-wrapper, .heatmap, .today-progress-bar, .KTR-week-progress, .slot) {
+  --light-0: var(--hanko-flaeche-2);
+  --light-1: #b5decc;  /* Turquoise Green */
+  --light-2: #96d1aa;  /* Cobalt Green */
+  --light-3: #489b6e;  /* Green */
+  --light-4: #1a7444;  /* Diamine Green */
+}
+
+.theme-dark :is(.heatmap-wrapper, .heatmap, .today-progress-bar, .KTR-week-progress, .slot) {
+  --dark-0: var(--hanko-flaeche-2);
+  --dark-1: #1a7444;   /* Diamine Green */
+  --dark-2: #489b6e;   /* Green */
+  --dark-3: #96d1aa;   /* Cobalt Green */
+  --dark-4: #b5decc;   /* Turquoise Green */
+}
+
+.today-progress-bar {
+  --color: var(--hanko-flaeche-2);
+}
+
+.heatmap-wrapper,
+.slot,
+.todayEntries__section {
+  border-radius: 14px;
+  border-color: var(--hanko-linie);
+}
+
+/* =========================================================
+   13. Rollen-Callouts: die Bausteine der Kursseite in Notizen
+   ========================================================= */
+
+/* Name deutsch, dazu ein englischer Zweitname. Titel selbst setzen,
+   z. B. „> [!pruefen] Selbsttest“. Farbe nach der Rolle in Farben.md. */
+.callout:is([data-callout="pruefen"], [data-callout="recall"]) {
+  --callout-color: var(--hanko-indigo-rgb);
+  --callout-icon: lucide-circle-check;
+}
+
+.callout:is([data-callout="rueckblick"], [data-callout="review"]) {
+  --callout-color: var(--hanko-indigo-rgb);
+  --callout-icon: lucide-history;
+}
+
+.callout:is([data-callout="meinung"], [data-callout="opinion"]) {
+  --callout-color: var(--hanko-ocker-rgb);
+  --callout-icon: lucide-message-circle;
+}
+
+.callout:is([data-callout="frage"], [data-callout="ask"]) {
+  --callout-color: var(--hanko-pflaume-rgb);
+  --callout-icon: lucide-message-circle-question;
+}
+
+.callout:is([data-callout="richtig"], [data-callout="correct"]) {
+  --callout-color: var(--hanko-ok-rgb);
+  --callout-icon: lucide-circle-check-big;
+}
+
+.callout:is([data-callout="vorab"], [data-callout="upfront"]) {
+  --callout-color: var(--hanko-rot-rgb);
+  --callout-icon: lucide-circle-help;
+}
+
+.callout:is([data-callout="aufloesung"], [data-callout="answer"]) {
+  --callout-color: var(--hanko-rot-rgb);
+  --callout-icon: lucide-circle-check-big;
+}
+
+.callout:is([data-callout="aufgabe"], [data-callout="exercise"]) {
+  --callout-color: var(--hanko-tinte-rgb);
+  --callout-icon: lucide-timer;
+}
+
+/* Erhöht heißt handeln: Prüfen, Vorab und Aufgabe sind Karten zum Antworten */
+.callout:is([data-callout="pruefen"], [data-callout="recall"], [data-callout="vorab"], [data-callout="upfront"], [data-callout="aufgabe"], [data-callout="exercise"]) {
+  background-color: var(--hanko-flaeche);
+  border-radius: var(--hanko-radius-erhoeht);
+  box-shadow: var(--hanko-schatten);
+}
+
+/* =========================================================
+   14. Belegstufen: Tags #evidence/… mit Form und Farbe
+   ========================================================= */
+
+/* strong = gut belegt (voller Kreis, Grün), partial = teilweise belegt
+   (halber Kreis, Ocker), contested = umstritten (gestrichelter Ring, Blau),
+   untestable = kaum prüfbar (gepunkteter Ring, Grau), refuted = nicht
+   haltbar (Ring mit Schrägstrich, Rot). Nie Farbe allein: Form und Wort
+   tragen die Bedeutung mit. Text bleibt Tinte. */
+.markdown-rendered a.tag[href="#evidence/strong" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-evidencestrong { --hanko-beleg-rgb: var(--hanko-ok-rgb); }
+.markdown-rendered a.tag[href="#evidence/partial" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-evidencepartial { --hanko-beleg-rgb: var(--hanko-ocker-rgb); }
+.markdown-rendered a.tag[href="#evidence/contested" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-evidencecontested { --hanko-beleg-rgb: var(--hanko-indigo-rgb); }
+.markdown-rendered a.tag[href="#evidence/untestable" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-evidenceuntestable { --hanko-beleg-rgb: var(--hanko-tinte-3-rgb); }
+.markdown-rendered a.tag[href="#evidence/refuted" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-evidencerefuted { --hanko-beleg-rgb: var(--hanko-rot-rgb); }
+
+.markdown-rendered a.tag:is([href="#evidence/strong" i], [href="#evidence/partial" i], [href="#evidence/contested" i], [href="#evidence/untestable" i], [href="#evidence/refuted" i]),
+.cm-s-obsidian .cm-hashtag:is(.cm-tag-evidencestrong, .cm-tag-evidencepartial, .cm-tag-evidencecontested, .cm-tag-evidenceuntestable, .cm-tag-evidencerefuted) {
+  color: var(--hanko-tinte);
+  background-color: rgba(var(--hanko-beleg-rgb), 0.1);
+  border-color: rgba(var(--hanko-beleg-rgb), 0.45);
+  white-space: nowrap;
+}
+
+.markdown-rendered a.tag:is([href="#evidence/strong" i], [href="#evidence/partial" i], [href="#evidence/contested" i], [href="#evidence/untestable" i], [href="#evidence/refuted" i])::before,
+.cm-s-obsidian .cm-hashtag-begin:is(.cm-tag-evidencestrong, .cm-tag-evidencepartial, .cm-tag-evidencecontested, .cm-tag-evidenceuntestable, .cm-tag-evidencerefuted)::before {
+  content: "";
+  display: inline-block;
+  box-sizing: border-box;
+  width: 0.72em;
+  height: 0.72em;
+  margin-inline-end: 0.4em;
+  vertical-align: -0.06em;
+  border-radius: 50%;
+  border: 1.5px solid rgb(var(--hanko-beleg-rgb));
+}
+
+.markdown-rendered a.tag[href="#evidence/strong" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-evidencestrong::before {
+  background-color: rgb(var(--hanko-beleg-rgb));
+}
+
+.markdown-rendered a.tag[href="#evidence/partial" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-evidencepartial::before {
+  background: linear-gradient(90deg, rgb(var(--hanko-beleg-rgb)) 50%, transparent 50%);
+}
+
+.markdown-rendered a.tag[href="#evidence/contested" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-evidencecontested::before {
+  border-style: dashed;
+}
+
+.markdown-rendered a.tag[href="#evidence/untestable" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-evidenceuntestable::before {
+  border-style: dotted;
+  border-width: 2px;
+}
+
+.markdown-rendered a.tag[href="#evidence/refuted" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-evidencerefuted::before {
+  background: linear-gradient(135deg, transparent 43%, rgb(var(--hanko-beleg-rgb)) 43%, rgb(var(--hanko-beleg-rgb)) 57%, transparent 57%);
+}
+
+/* =========================================================
+   15. Fokus: eine Aufgabe im Blick
+   ========================================================= */
+
+/* Schalter in Style Settings oder cssclasses focus. Solange der Editor den
+   Cursor hat, steht nur der Absatz mit dem Cursor in voller Tinte. */
+:is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > *,
+:is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .metadata-container {
+  transition: opacity 240ms ease;
+}
+
+:is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > :not(.cm-active),
+:is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .metadata-container {
+  opacity: 0.28;
+}
+
+:is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > :not(.cm-active):hover {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > * {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   16. Schablonen als Ordnerzeichen (Icon-Paket „hanko“ für Iconize)
+   ========================================================= */
+
+/* Das rote Element der Schablone ist Signalrot. Auf den farbigen
+   Ordnerköpfen folgt es der Schrift der Pille, damit es lesbar bleibt
+   und Rot dem Siegel vorbehalten bleibt. */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title {
+  --hanko-ikon-akzent: currentColor;
+}
+
+/* =========================================================
+   17. Aufgaben mit Bullet-Journal-Zeichen
+   ========================================================= */
+
+/* Runde Auswahlpunkte, ein Zeichen je Zustand, nie Farbe allein.
+   - [ ] offen · - [x] erledigt (grüner Kreis mit Haken)
+   - [>] verschoben · - [<] eingeplant · - [/] in Arbeit
+   - [-] verworfen (grau, nichts durchgestrichen) · - [?] Frage an mich
+   - [!] jetzt dran (Signalrot) */
+:is([data-task=">"] > input[type=checkbox], [data-task=">"] > p > input[type=checkbox], input[type=checkbox][data-task=">"]),
+:is([data-task="<"] > input[type=checkbox], [data-task="<"] > p > input[type=checkbox], input[type=checkbox][data-task="<"]),
+:is([data-task="-"] > input[type=checkbox], [data-task="-"] > p > input[type=checkbox], input[type=checkbox][data-task="-"]),
+:is([data-task="?"] > input[type=checkbox], [data-task="?"] > p > input[type=checkbox], input[type=checkbox][data-task="?"]),
+:is([data-task="/"] > input[type=checkbox], [data-task="/"] > p > input[type=checkbox], input[type=checkbox][data-task="/"]) {
+  background-color: transparent;
+  --checkbox-color: transparent;
+  --checkbox-color-hover: transparent;
+}
+
+:is([data-task=">"] > input[type=checkbox], [data-task=">"] > p > input[type=checkbox], input[type=checkbox][data-task=">"]),
+:is([data-task="<"] > input[type=checkbox], [data-task="<"] > p > input[type=checkbox], input[type=checkbox][data-task="<"]) {
+  border-color: var(--hanko-tinte-2);
+}
+
+:is([data-task=">"] > input[type=checkbox], [data-task=">"] > p > input[type=checkbox], input[type=checkbox][data-task=">"])::after,
+:is([data-task="<"] > input[type=checkbox], [data-task="<"] > p > input[type=checkbox], input[type=checkbox][data-task="<"])::after,
+:is([data-task="-"] > input[type=checkbox], [data-task="-"] > p > input[type=checkbox], input[type=checkbox][data-task="-"])::after,
+:is([data-task="?"] > input[type=checkbox], [data-task="?"] > p > input[type=checkbox], input[type=checkbox][data-task="?"])::after,
+:is([data-task="!"] > input[type=checkbox], [data-task="!"] > p > input[type=checkbox], input[type=checkbox][data-task="!"])::after {
+  -webkit-mask-size: 72%;
+  -webkit-mask-position: 50% 50%;
+}
+
+:is([data-task=">"] > input[type=checkbox], [data-task=">"] > p > input[type=checkbox], input[type=checkbox][data-task=">"])::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-color: var(--hanko-tinte-2);
+}
+
+:is([data-task="<"] > input[type=checkbox], [data-task="<"] > p > input[type=checkbox], input[type=checkbox][data-task="<"])::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 12H6M11 6l-6 6 6 6' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-color: var(--hanko-tinte-2);
+}
+
+:is([data-task="-"] > input[type=checkbox], [data-task="-"] > p > input[type=checkbox], input[type=checkbox][data-task="-"]) {
+  border-color: var(--hanko-tinte-3);
+  border-style: dashed;
+}
+
+:is([data-task="-"] > input[type=checkbox], [data-task="-"] > p > input[type=checkbox], input[type=checkbox][data-task="-"])::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12h12' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-color: var(--hanko-tinte-3);
+}
+
+:is([data-task="?"] > input[type=checkbox], [data-task="?"] > p > input[type=checkbox], input[type=checkbox][data-task="?"]) {
+  border-color: var(--hanko-pflaume);
+}
+
+:is([data-task="?"] > input[type=checkbox], [data-task="?"] > p > input[type=checkbox], input[type=checkbox][data-task="?"])::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.2 9a3 3 0 1 1 4.3 2.7c-.9.4-1.5 1.1-1.5 2.1M12 18.2v.1' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-color: var(--hanko-pflaume);
+}
+
+/* In Arbeit: halber Kreis in Tinte */
+:is([data-task="/"] > input[type=checkbox], [data-task="/"] > p > input[type=checkbox], input[type=checkbox][data-task="/"]) {
+  border-color: var(--hanko-tinte);
+  background: linear-gradient(90deg, var(--hanko-tinte) 50%, transparent 50%);
+}
+
+:is([data-task="/"] > input[type=checkbox], [data-task="/"] > p > input[type=checkbox], input[type=checkbox][data-task="/"])::after {
+  display: none;
+}
+
+/* Jetzt dran: Signalrot, Ausrufezeichen in Papier */
+:is([data-task="!"] > input[type=checkbox], [data-task="!"] > p > input[type=checkbox], input[type=checkbox][data-task="!"]) {
+  --checkbox-color: var(--hanko-rot);
+  --checkbox-color-hover: var(--hanko-rot);
+  background-color: var(--hanko-rot);
+  border-color: var(--hanko-rot);
+}
+
+:is([data-task="!"] > input[type=checkbox], [data-task="!"] > p > input[type=checkbox], input[type=checkbox][data-task="!"])::after {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 5.5v8M12 18.2v.1' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-color: var(--hanko-papier);
+}
+
+/* Verworfen: grau, nichts durchgestrichen */
+.markdown-rendered li.task-list-item[data-task="-"],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task="-"] {
+  color: var(--hanko-tinte-3);
+  text-decoration: none;
+}
+
+/* =========================================================
+   18. Daily Page: Daily Notes mit cssclasses daily-page
+   ========================================================= */
+
+/* Der Titel der Notiz (Datum und Wochentag) steht groß, darüber die
+   Beschriftung „Daily Page“ mit rotem Punkt, wie der Seitenkopf der
+   Kursseite. Gilt auch, wenn der Inline-Titel sonst ausgeschaltet ist. */
+body :is(.markdown-source-view, .markdown-preview-view):is(.daily-page, .weekly-page, .monthly-page) .inline-title:not([data-level]) {
+  display: block;
+  font-size: clamp(2em, 4.6vw, 2.7em);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  margin-block-end: 0.5em;
+}
+
+body :is(.markdown-source-view, .markdown-preview-view):is(.daily-page, .weekly-page, .monthly-page) .inline-title:not([data-level])::before {
+  content: "Daily Page";
+  display: block;
+  margin-bottom: 0.7rem;
+  padding-left: 1.05rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+  background: radial-gradient(circle, var(--hanko-rot) 0 0.27rem, transparent 0.29rem) left center / 0.6rem 0.6rem no-repeat;
+}
+
+body :is(.markdown-source-view, .markdown-preview-view).weekly-page .inline-title:not([data-level])::before {
+  content: "Weekly Page";
+}
+
+body :is(.markdown-source-view, .markdown-preview-view).monthly-page .inline-title:not([data-level])::before {
+  content: "Monthly Page";
+}
+
+/* Die Karten des Tages (Memento Mori, Daily Stoic, Actions) wie der Fahrplan:
+   flache Karte, Strich oben in der Farbe der Karte, ruhig und kompakt. */
+:is(.markdown-source-view, .markdown-preview-view).daily-page .callout:is([data-callout="memento-mori"], [data-callout="daily-stoic"], [data-callout="actions"]) {
+  border-top: 3px solid rgb(var(--callout-color));
+  border-radius: var(--hanko-radius);
+  margin-block: 0.7em;
+}
+
+:is(.markdown-source-view, .markdown-preview-view).daily-page .callout:is([data-callout="memento-mori"], [data-callout="daily-stoic"], [data-callout="actions"]) > .callout-title {
+  padding-block: 0.65em;
+}
+
+:is(.markdown-source-view, .markdown-preview-view).daily-page .callout:is([data-callout="memento-mori"], [data-callout="daily-stoic"], [data-callout="actions"]) > .callout-content {
+  padding-bottom: 0.8em;
+}
+
+/* Fortschritt (Memento Mori und andere progress-Elemente): schmaler Balken */
+.markdown-rendered progress,
+.markdown-source-view progress {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border: none;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: var(--hanko-flaeche-2);
+}
+
+.markdown-rendered progress::-webkit-progress-bar,
+.markdown-source-view progress::-webkit-progress-bar {
+  background-color: var(--hanko-flaeche-2);
+  border-radius: 999px;
+}
+
+.markdown-rendered progress::-webkit-progress-value,
+.markdown-source-view progress::-webkit-progress-value {
+  background-color: var(--hanko-tinte);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   19. Bases und Kanban: Karten, Bahnen, Beschriftungen
+   ========================================================= */
+
+/* Bases: Tabellenkopf als Beschriftung, nur Haarlinien quer,
+   Karten flach auf Papier */
+body {
+  --bases-table-header-weight: 800;
+  --bases-table-header-color: var(--hanko-tinte-3);
+  --bases-table-header-background: transparent;
+  --bases-table-container-border-width: 0;
+  --bases-table-column-border-width: 0;
+  --bases-table-row-height: 34px;
+  --bases-table-group-background: var(--hanko-papier);
+  --bases-cards-background: var(--hanko-papier);
+  --bases-cards-cover-background: var(--hanko-flaeche-2);
+  --bases-cards-radius: var(--hanko-radius);
+  --bases-cards-shadow: 0 0 0 1px var(--hanko-linie);
+  --bases-cards-shadow-hover: 0 0 0 1px var(--hanko-tinte-3);
+  --bases-embed-border-radius: var(--hanko-radius);
+}
+
+.bases-thead .bases-table-header-label,
+.bases-thead .bases-table-header-name {
+  font-size: 0.72em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bases-thead {
+  border-bottom: 1px solid var(--hanko-tinte);
+}
+
+.bases-group-heading {
+  border-radius: var(--hanko-radius);
+}
+
+/* Links in Bases wie in Notizen: Tinte, rote Unterstreichung */
+.bases-view a.internal-link,
+.bases-view .internal-link {
+  color: var(--hanko-tinte);
+  text-decoration-color: var(--hanko-rot);
+  text-underline-offset: 0.18em;
+}
+
+/* Kanban: Spalten sind Bahnen auf dem Grund, Karten darin erhöht,
+   weil man an ihnen arbeitet */
+.kanban-plugin__lane {
+  background-color: var(--hanko-grund);
+  border: 1px solid transparent;
+  border-radius: var(--hanko-radius);
+}
+
+.theme-dark .kanban-plugin__lane {
+  background-color: var(--hanko-papier);
+  border-color: var(--hanko-linie);
+}
+
+.kanban-plugin__lane-header-wrapper {
+  border-bottom: none;
+  padding-block: 12px 4px;
+}
+
+.kanban-plugin__lane-title-text {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.kanban-plugin__lane-title-count {
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--hanko-tinte-3);
+  background: var(--hanko-flaeche);
+  border-radius: 999px;
+  padding: 0.1em 0.6em;
+}
+
+.kanban-plugin__item {
+  background-color: var(--hanko-flaeche);
+  border: 1px solid var(--hanko-linie);
+  border-radius: 12px;
+  box-shadow: var(--hanko-schatten);
+}
+
+.kanban-plugin__item:hover {
+  border-color: var(--hanko-tinte-3);
+}
+
+.kanban-plugin__item-tag {
+  border-radius: 999px;
+  border: 1px solid var(--hanko-linie);
+  background: transparent;
+  color: var(--hanko-tinte-2);
+}
+
+/* =========================================================
+   20. Quellen: Fußnoten wie das Verzeichnis der Kursseite
+   ========================================================= */
+
+/* Verweise klein und grau, nicht hochgestellt bunt. Unten ein Verzeichnis
+   „Quellen“ mit Haarlinien und hängendem Einzug; der angesprungene
+   Eintrag trägt den roten Strich links. */
+.markdown-rendered sup.footnote-ref,
+.markdown-rendered .footnote-ref {
+  font-size: 0.68em;
+  font-weight: 650;
+  vertical-align: 0.5em;
+}
+
+.markdown-rendered .footnote-link,
+.markdown-rendered sup.footnote-ref a {
+  color: var(--hanko-tinte-3);
+  text-decoration: none;
+}
+
+.markdown-rendered .footnote-link:hover,
+.markdown-rendered sup.footnote-ref a:hover {
+  color: var(--hanko-rot);
+}
+
+.markdown-rendered section.footnotes,
+.markdown-rendered .footnotes {
+  margin-top: 3em;
+  padding-top: 1.2em;
+  border-top: 1px solid var(--hanko-linie);
+  color: var(--hanko-tinte-2);
+}
+
+.markdown-rendered .footnotes::before {
+  content: "Quellen";
+  display: block;
+  margin-bottom: 0.6em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+}
+
+.markdown-rendered .footnotes hr,
+.markdown-rendered hr.footnotes-sep {
+  display: none;
+}
+
+.markdown-rendered .footnotes ol {
+  padding-inline-start: 1.8em;
+  margin: 0;
+}
+
+.markdown-rendered .footnotes li {
+  padding: 0.55em 0.6em 0.55em 0.2em;
+  border-bottom: 1px solid var(--hanko-linie);
+  line-height: 1.45;
+}
+
+.markdown-rendered .footnotes li::marker {
+  color: var(--hanko-tinte-3);
+  font-size: 0.85em;
+}
+
+.markdown-rendered .footnotes li p {
+  margin: 0;
+}
+
+.markdown-rendered .footnotes li:target,
+.markdown-rendered .footnotes li.is-flashing {
+  color: var(--hanko-tinte);
+  background: var(--hanko-papier);
+  box-shadow: inset 3px 0 0 var(--hanko-rot);
+  border-radius: 0 8px 8px 0;
+}
+
+.markdown-rendered .footnote-backref {
+  color: var(--hanko-tinte-3);
+}
+
+.cm-s-obsidian span.cm-footref {
+  color: var(--hanko-tinte-3);
+  font-size: 0.85em;
+}
+
+/* =========================================================
+   21. Mobil: Handy und Tablet
+   ========================================================= */
+
+/* Seitenleiste als Schublade auf dem Grund, schwebende Leiste als Glas */
+.is-mobile {
+  --mobile-sidebar-background: var(--hanko-grund);
+}
+
+.is-mobile.is-floating-nav .mobile-navbar {
+  background-color: var(--hanko-glas);
+  border: 1px solid var(--hanko-glas-rand);
+}
+
+.is-mobile .workspace-drawer {
+  border-color: var(--hanko-linie);
+}
+
+/* Ordnerpillen und Notizen mit Fingerabstand */
+.is-phone .nav-files-container .tree-item-self {
+  padding-block: 7px;
+}
+
+.is-phone .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+  margin-bottom: 5px;
+}
+
+/* Siegel und Titel auf dem Handy etwas kleiner */
+body.is-phone {
+  --hanko-siegel-groesse: 3rem;
+}
+
+
+body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-content[data-type="markdown"] :is(.markdown-source-view.seal .cm-sizer, .markdown-preview-view.seal > .markdown-preview-sizer) {
+  padding-top: 3.6rem;
+}
+
+.is-phone .markdown-rendered h1,
+.is-phone .cm-s-obsidian .HyperMD-header-1 {
+  font-size: 1.8em;
+}
+
+/* Callouts und Karten auf dem Handy etwas enger */
+.is-phone .callout .callout-title {
+  padding: 0.75em 0.9em;
+}
+
+.is-phone .callout .callout-content {
+  padding: 0 0.9em 0.85em;
+}
+
+/* =========================================================
+   22. Weekly Page: die Tage als Kartenreihe
+   ========================================================= */
+
+/* Callout [!days] mit einer Liste der Tage: Karten in einer Reihe wie der
+   Fahrplan der Kursseite, quer scrollbar. Gleiches gilt für [!weeks]. */
+.callout:is([data-callout="days"], [data-callout="weeks"]) {
+  --callout-color: var(--hanko-tinte-3-rgb);
+  --callout-icon: lucide-calendar-days;
+  background: transparent;
+  border: none;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-title {
+  padding-inline: 0;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content {
+  padding: 0;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.4rem;
+  scroll-snap-type: x mandatory;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li {
+  flex: 0 0 8.4rem;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--hanko-radius);
+  background: var(--hanko-papier);
+  border: 1px solid var(--hanko-linie);
+  box-shadow: inset 0 3px 0 var(--hanko-tinte);
+  scroll-snap-align: start;
+  font-size: 0.88em;
+  line-height: 1.35;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li::marker,
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li > .list-bullet {
+  display: none;
+  content: "";
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li a.internal-link {
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li a.internal-link.is-unresolved {
+  color: var(--hanko-tinte-3);
+}
+
+/* =========================================================
+   23. Status als Tags: #status/…
+   ========================================================= */
+
+/* active = in Arbeit (voller Kreis, Ankerfarbe), waiting = wartet (Uhr,
+   Indigo), someday = irgendwann (gepunkteter Ring, Grau), done = erledigt
+   (Haken, Grün). Wie die Belegstufen: Form, Wort und Farbe. */
+.markdown-rendered a.tag[href="#status/active" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-statusactive { --hanko-beleg-rgb: var(--hanko-tafel-1-rgb); }
+.markdown-rendered a.tag[href="#status/waiting" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-statuswaiting { --hanko-beleg-rgb: var(--hanko-indigo-rgb); }
+.markdown-rendered a.tag[href="#status/someday" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-statussomeday { --hanko-beleg-rgb: var(--hanko-tinte-3-rgb); }
+.markdown-rendered a.tag[href="#status/done" i],
+.cm-s-obsidian .cm-hashtag.cm-tag-statusdone { --hanko-beleg-rgb: var(--hanko-ok-rgb); }
+
+.markdown-rendered a.tag:is([href="#status/active" i], [href="#status/waiting" i], [href="#status/someday" i], [href="#status/done" i]),
+.cm-s-obsidian .cm-hashtag:is(.cm-tag-statusactive, .cm-tag-statuswaiting, .cm-tag-statussomeday, .cm-tag-statusdone) {
+  color: var(--hanko-tinte);
+  background-color: rgba(var(--hanko-beleg-rgb), 0.1);
+  border-color: rgba(var(--hanko-beleg-rgb), 0.45);
+  white-space: nowrap;
+}
+
+.markdown-rendered a.tag:is([href="#status/active" i], [href="#status/waiting" i], [href="#status/someday" i], [href="#status/done" i])::before,
+.cm-s-obsidian .cm-hashtag-begin:is(.cm-tag-statusactive, .cm-tag-statuswaiting, .cm-tag-statussomeday, .cm-tag-statusdone)::before {
+  content: "";
+  display: inline-block;
+  box-sizing: border-box;
+  width: 0.72em;
+  height: 0.72em;
+  margin-inline-end: 0.4em;
+  vertical-align: -0.06em;
+  border-radius: 50%;
+  border: 1.5px solid rgb(var(--hanko-beleg-rgb));
+}
+
+.markdown-rendered a.tag[href="#status/active" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-statusactive::before {
+  background-color: rgb(var(--hanko-beleg-rgb));
+}
+
+.markdown-rendered a.tag[href="#status/waiting" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-statuswaiting::before {
+  border: none;
+  border-radius: 0;
+  width: 0.85em;
+  height: 0.85em;
+  background-color: rgb(var(--hanko-beleg-rgb));
+  -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7v5l3 2M12 3a9 9 0 1 1 0 18a9 9 0 1 1 0-18z' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.markdown-rendered a.tag[href="#status/someday" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-statussomeday::before {
+  border-style: dotted;
+  border-width: 2px;
+}
+
+.markdown-rendered a.tag[href="#status/done" i]::before,
+.cm-s-obsidian .cm-hashtag-begin.cm-tag-statusdone::before {
+  border: none;
+  border-radius: 0;
+  width: 0.85em;
+  height: 0.85em;
+  background-color: rgb(var(--hanko-beleg-rgb));
+  -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* =========================================================
+   24. Readwise: Highlights als Fundstellen
+   ========================================================= */
+
+/* Notizen aus dem Readwise-Plugin: Cover klein mit Schatten, jedes
+   Highlight mit „View Highlight“-Link als ruhige Karte, der Link als
+   kleine graue Quelle. Wirkt im Lesemodus. */
+.markdown-rendered img[alt="rw-book-cover"],
+.markdown-source-view img[alt="rw-book-cover"] {
+  max-width: 7.5rem;
+  border-radius: 6px;
+  box-shadow: var(--hanko-schatten);
+}
+
+.markdown-rendered li:has(> a.external-link[href*="read.readwise.io"]),
+.markdown-rendered li:has(> p > a.external-link[href*="read.readwise.io"]) {
+  list-style: none;
+  margin: 0 0 0.6em -1.1em;
+  padding: 0.7em 0.95em;
+  border-radius: 14px;
+  background: var(--hanko-papier);
+  border: 1px solid var(--hanko-linie);
+  box-shadow: inset 3px 0 0 rgba(var(--hanko-rot-rgb), 0.55);
+}
+
+.markdown-rendered li:has(> a.external-link[href*="read.readwise.io"]) > .list-bullet,
+.markdown-rendered li:has(> p > a.external-link[href*="read.readwise.io"]) > .list-bullet {
+  display: none;
+}
+
+.markdown-rendered a.external-link[href*="read.readwise.io"] {
+  font-size: 0.72em;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: var(--hanko-tinte-3);
+  text-decoration: none;
+  background-image: none;
+  padding-right: 0;
+}
+
+.markdown-rendered a.external-link[href*="read.readwise.io"]:hover {
+  color: var(--hanko-rot);
+}
+
+/* =========================================================
+   25. Canvas: Karten auf Papier
+   ========================================================= */
+
+/* Ungefärbte Karten mit Haarlinie, Verbindungen in Grau, Gruppen-Titel
+   als Beschriftung. Gefärbte Karten nehmen die Tafel (Abschnitt 3). */
+.theme-light {
+  --canvas-color: 139, 137, 130;
+}
+
+.theme-dark {
+  --canvas-color: 125, 123, 117;
+}
+
+.canvas-node-container {
+  border-radius: 14px;
+  background-color: var(--hanko-flaeche);
+  box-shadow: none;
+}
+
+.canvas-node:not([class*="mod-canvas-color"]) > .canvas-node-container {
+  border-color: var(--hanko-linie);
+}
+
+.canvas-node.is-focused > .canvas-node-container,
+.canvas-node.is-selected > .canvas-node-container {
+  box-shadow: var(--hanko-schatten);
+}
+
+.canvas-group-label {
+  font-size: 1.05em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+}
+
+.canvas-node-group > .canvas-node-container {
+  background-color: rgba(var(--canvas-color), 0.05);
+  border-style: dashed;
+}
+
+.canvas-controls .canvas-control-group {
+  border-radius: 12px;
+}
