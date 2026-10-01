@@ -14,6 +14,7 @@ Hanko is an Obsidian theme named after the Japanese name seal. Almost everything
 - **Bold in the anchor colour.** Bold text is Burnt Sienna in light mode and Raw Sienna in dark mode. Indigo, red, umber, plum, green and plain ink are available.
 - **Readable everywhere.** Every text and background pair reaches at least 4.5:1, in light and dark.
 - **No network requests.** Everything, including the seal, is embedded.
+- **Light on the app.** No `:has()` selectors, which can slow Obsidian down in large vaults.
 
 ## Note building blocks
 
@@ -32,7 +33,7 @@ Footnotes turn into a "Sources" list with hairlines and a red bar on the entry y
 
 ## Plugin support
 
-Bases (tables and cards), Kanban (lanes and cards), Canvas, Keep the Rhythm (heatmap in Wada greens), Home Tab (the seal replaces the logo), Readwise (highlights as cards), Tasks, Iconize, Style Settings.
+Bases (tables and cards), Kanban (lanes and cards), Canvas, Keep the Rhythm (heatmap in Wada greens), Home Tab (the seal replaces the logo), Readwise (small cover, "View Highlight" as a quiet grey source), Tasks, Iconize, Style Settings.
 
 ## Style Settings
 

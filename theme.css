@@ -936,25 +936,40 @@ body:not(.hanko-keine-h2-linie) .markdown-rendered .inline-title + h2 {
   letter-spacing: 0.12em;
 }
 
-/* Links: Text in Tinte, Unterstreichung rot */
+/* Links: Text in Tinte, Unterstreichung rot.
+   Die rote Linie ist ein feiner Rand unter dem Wort. Obsidians eigene
+   Unterstreichung schalten die Link-Variablen an den Links ab, auch beim
+   Überfahren. */
 .markdown-rendered a.internal-link,
 .markdown-rendered a.external-link,
-.markdown-rendered a.tag,
+.cm-s-obsidian span.cm-hmd-internal-link,
+.cm-s-obsidian span.cm-link,
+.cm-s-obsidian span.cm-url,
+.bases-view .internal-link {
+  --link-decoration: none;
+  --link-decoration-hover: none;
+  --link-external-decoration: none;
+  --link-external-decoration-hover: none;
+}
+
+.markdown-rendered a.internal-link,
+.markdown-rendered a.external-link,
 .cm-s-obsidian span.cm-hmd-internal-link .cm-underline,
 .cm-s-obsidian span.cm-link .cm-underline,
-.cm-s-obsidian span.cm-url {
-  text-decoration-color: var(--hanko-rot);
-  text-underline-offset: 0.18em;
+.cm-s-obsidian span.cm-url,
+.bases-view .internal-link {
+  border-bottom: 1px solid var(--hanko-rot);
 }
 
 .markdown-rendered a.tag {
   text-decoration: none;
 }
 
+/* Noch nicht angelegte Notiz: gestrichelt in Grau */
 .markdown-rendered a.internal-link.is-unresolved,
 .cm-s-obsidian span.cm-hmd-internal-link.is-unresolved .cm-underline {
-  text-decoration-color: var(--hanko-tinte-3);
-  text-decoration-style: dashed;
+  border-bottom-style: dashed;
+  border-bottom-color: var(--hanko-tinte-3);
 }
 
 /* Zitate: Strich in Tinte, nicht kursiv */
@@ -1274,7 +1289,7 @@ body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .empty-state-container::
 body:not(.hanko-kein-abdruck) .cm-sizer::before,
 body:not(.hanko-kein-abdruck) .markdown-preview-sizer::before,
 body:not(.hanko-kein-abdruck) .empty-state-container::before,
-body:not(.hanko-kein-abdruck) .home-tab-logo::before {
+body:not(.hanko-kein-abdruck) .home-tab-logo > svg {
   opacity: var(--hanko-siegel-deckkraft, 1);
 }
 
@@ -1297,17 +1312,15 @@ body:not(.hanko-kein-abdruck) .empty-state-container::before {
 .empty-state-action:hover {
   color: var(--hanko-tinte);
   text-decoration: underline;
-  text-decoration-color: var(--hanko-rot);
   text-underline-offset: 0.18em;
 }
 
-/* Neuer Tab mit dem Plugin Home Tab: Siegel statt Obsidian-Logo */
-body:not(.hanko-kein-abdruck) .home-tab-logo > svg {
-  display: none;
-}
-
-body:not(.hanko-kein-abdruck) .home-tab-logo:has(> svg)::before {
-  content: "";
+/* Neuer Tab mit dem Plugin Home Tab: Siegel statt Obsidian-Logo.
+   Das Logo-SVG selbst wird zum Abdruck: sein Inhalt verschwindet, die
+   Fläche ist Siegelrot, die Form kommt aus der Maske. Eigene Bilder als
+   Logo (img) bleiben unberührt. Der Container hebt die Gewichtung über die
+   Größenregel des Plugins. */
+body:not(.hanko-kein-abdruck) .home-tab-wordmark-container .home-tab-logo > svg {
   display: block;
   width: 4.6rem;
   height: 4.6rem;
@@ -1317,11 +1330,15 @@ body:not(.hanko-kein-abdruck) .home-tab-logo:has(> svg)::before {
   transform: rotate(-7deg);
 }
 
-body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .home-tab-logo:has(> svg)::before {
+body:not(.hanko-kein-abdruck) .home-tab-logo > svg > * {
+  display: none;
+}
+
+body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .home-tab-logo > svg {
   animation: var(--hanko-aufsetzen, hanko-aufsetzen 320ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both);
 }
 
-.theme-light .home-tab-logo::before {
+.theme-light .home-tab-logo > svg {
   mix-blend-mode: multiply;
 }
 
@@ -1373,96 +1390,110 @@ body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
    hell Nr. 279, dunkel Nr. 293.
    Die Farbe hängt am ersten Zeichen des Namens (Ziffer oder Buchstabe),
    nicht an der Position. So bleibt sie beim Scrollen stabil.
-   Ohne passenden Ton und im Archiv: Beton. */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+   Ohne passenden Ton und im Archiv: Beton.
+   Oberste Ebene heißt: Pfad ohne „/“. Den Ton tragen der Kopf des Ortes
+   und sein Inhalt, das Geschwister .nav-folder-children. So braucht es
+   keinen Elternselektor. */
+.nav-files-container .nav-folder-title:not([data-path*="/"]),
+.nav-files-container .nav-folder-title:not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-beton-rgb);
   --hanko-ort-schrift: var(--hanko-beton-schrift);
   --hanko-ort-dichte: 1;
 }
 
 /* Ton 1: Raw Sienna, die Ankerfarbe, hell und dunkel */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="1"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="5"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="9"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="a" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="e" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="i" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="j" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="n" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="u" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="y" i]:not([data-path*="/"])) {
+.nav-files-container .nav-folder-title:is(
+  [data-path^="1"], [data-path^="5"], [data-path^="9"], [data-path^="a" i], [data-path^="e" i],
+  [data-path^="i" i], [data-path^="j" i], [data-path^="n" i], [data-path^="u" i], [data-path^="y" i]
+):not([data-path*="/"]),
+.nav-files-container .nav-folder-title:is(
+  [data-path^="1"], [data-path^="5"], [data-path^="9"], [data-path^="a" i], [data-path^="e" i],
+  [data-path^="i" i], [data-path^="j" i], [data-path^="n" i], [data-path^="u" i], [data-path^="y" i]
+):not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-tafel-1-rgb);
   --hanko-ort-schrift: var(--hanko-tafel-1-schrift);
   --hanko-ort-dichte: var(--hanko-tafel-1-dichte, 1);
 }
 
 /* Ton 2: hell Dark Tyrian Blue (Ausweiche Eosine Pink), dunkel Green */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="2"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="6"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="0"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="b" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="f" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="k" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="o" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="r" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="v" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="z" i]:not([data-path*="/"])) {
+.nav-files-container .nav-folder-title:is(
+  [data-path^="2"], [data-path^="6"], [data-path^="0"], [data-path^="b" i], [data-path^="f" i],
+  [data-path^="k" i], [data-path^="o" i], [data-path^="r" i], [data-path^="v" i], [data-path^="z" i]
+):not([data-path*="/"]),
+.nav-files-container .nav-folder-title:is(
+  [data-path^="2"], [data-path^="6"], [data-path^="0"], [data-path^="b" i], [data-path^="f" i],
+  [data-path^="k" i], [data-path^="o" i], [data-path^="r" i], [data-path^="v" i], [data-path^="z" i]
+):not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-tafel-2-rgb);
   --hanko-ort-schrift: var(--hanko-tafel-2-schrift);
   --hanko-ort-dichte: var(--hanko-tafel-2-dichte, 1);
 }
 
 /* Ton 3: hell Ecru, dunkel Artemesia Green */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="3"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="7"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="d" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="g" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="l" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="p" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="s" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="w" i]:not([data-path*="/"])) {
+.nav-files-container .nav-folder-title:is(
+  [data-path^="3"], [data-path^="7"], [data-path^="d" i], [data-path^="g" i], [data-path^="l" i],
+  [data-path^="p" i], [data-path^="s" i], [data-path^="w" i]
+):not([data-path*="/"]),
+.nav-files-container .nav-folder-title:is(
+  [data-path^="3"], [data-path^="7"], [data-path^="d" i], [data-path^="g" i], [data-path^="l" i],
+  [data-path^="p" i], [data-path^="s" i], [data-path^="w" i]
+):not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-tafel-3-rgb);
   --hanko-ort-schrift: var(--hanko-tafel-3-schrift);
   --hanko-ort-dichte: var(--hanko-tafel-3-dichte, 1);
 }
 
 /* Ton 4: hell Vinaceous Cinnamon, dunkel Turquoise Green */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="4"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="8"]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="c" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="h" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="m" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="q" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="t" i]:not([data-path*="/"])),
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path^="x" i]:not([data-path*="/"])) {
+.nav-files-container .nav-folder-title:is(
+  [data-path^="4"], [data-path^="8"], [data-path^="c" i], [data-path^="h" i], [data-path^="m" i],
+  [data-path^="q" i], [data-path^="t" i], [data-path^="x" i]
+):not([data-path*="/"]),
+.nav-files-container .nav-folder-title:is(
+  [data-path^="4"], [data-path^="8"], [data-path^="c" i], [data-path^="h" i], [data-path^="m" i],
+  [data-path^="q" i], [data-path^="t" i], [data-path^="x" i]
+):not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-tafel-4-rgb);
   --hanko-ort-schrift: var(--hanko-tafel-4-schrift);
   --hanko-ort-dichte: var(--hanko-tafel-4-dichte, 1);
 }
 
 /* Archiv: Beton, wie vergangene Blöcke im Fahrplan */
-.nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title[data-path*="archiv" i]:not([data-path*="/"])) {
+.nav-files-container .nav-folder-title[data-path*="archiv" i]:not([data-path*="/"]),
+.nav-files-container .nav-folder-title[data-path*="archiv" i]:not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-beton-rgb);
   --hanko-ort-schrift: var(--hanko-beton-schrift);
   --hanko-ort-dichte: 1;
 }
 
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+/* Abstand zwischen den Orten: zugeklappt unter dem Kopf, offen unter dem Inhalt */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder.is-collapsed > .nav-folder-title:not([data-path*="/"]) {
+  margin-bottom: 3px;
+}
+
+/* Fläche des Ortes: Der Inhalt trägt den Ton und läuft über die volle
+   Breite. Er reicht 12 px hinter den Kopf (14 px abzüglich 2 px Abstand
+   unter dem Kopf), damit die Fläche die Pille seitlich umfasst; der Kopf
+   liegt als positioniertes Element darüber. Die Führungslinie ist ein
+   schmaler Verlauf an der Stelle des Einzugs. */
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) ~ .nav-folder-children {
   --nav-item-background-hover: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-hover) * var(--hanko-ort-dichte)));
   --nav-item-background-active: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-aktiv) * var(--hanko-ort-dichte)));
   --nav-item-background-selected: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-aktiv) * var(--hanko-ort-dichte)));
   --nav-indentation-guide-color: rgba(var(--hanko-ort-rgb), min(1, calc(var(--hanko-ort-linie) * var(--hanko-ort-dichte))));
-  background-color: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-flaeche) * var(--hanko-ort-dichte)));
-  border-radius: 15px;
-  margin-bottom: 3px;
-}
-
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])):not(.is-collapsed) {
+  --hanko-ort-einzug: var(--nav-item-children-margin-start, 12px);
+  margin: -14px 0 3px;
+  padding-top: 14px;
   padding-bottom: 4px;
+  padding-inline-start: calc(var(--hanko-ort-einzug) + var(--nav-item-children-padding-start, 4px) + 2px);
+  border-inline-start: none;
+  border-radius: 0 0 15px 15px;
+  background:
+    linear-gradient(var(--nav-indentation-guide-color), var(--nav-indentation-guide-color)) var(--hanko-ort-einzug) 14px / 2px calc(100% - 18px) no-repeat,
+    rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-flaeche) * var(--hanko-ort-dichte)));
 }
 
 /* Kopf des Ortes: deckende Pille in der Farbe der Tafel */
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) {
   --icon-color: var(--hanko-ort-schrift);
   --nav-collapse-icon-color: var(--hanko-ort-schrift);
   --collapse-icon-color: var(--hanko-ort-schrift);
@@ -1472,46 +1503,49 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):ha
   font-weight: 650;
 }
 
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title :is(.collapse-icon, .iconize-icon, .tree-item-icon) {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) :is(.collapse-icon, .iconize-icon, .tree-item-icon) {
   color: var(--hanko-ort-schrift);
   opacity: 0.85;
 }
 
-body:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+body:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder-title:not([data-path*="/"]):hover {
   color: var(--hanko-ort-schrift);
   background-color: rgb(var(--hanko-ort-rgb));
   filter: brightness(0.94);
 }
 
-.theme-dark:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+.theme-dark:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder-title:not([data-path*="/"]):hover {
   filter: brightness(1.12);
 }
 
-/* Zart: die Tafel als durchscheinende Fläche, Namen in Tinte */
-body.hanko-ordner-zart:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title,
-body.hanko-ordner-zart:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title:hover {
+/* Zart: die Tafel als durchscheinende Fläche, Namen in Tinte.
+   Die Pille wird auf dem Grund der Seitenleiste deckend gemischt (zarter Ton
+   über der Fläche des Ortes), damit die Fläche dahinter nicht durchscheint. */
+body.hanko-ordner-zart:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]),
+body.hanko-ordner-zart:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder-title:not([data-path*="/"]):hover {
   --hanko-ort-schrift: var(--hanko-tinte);
-  background-color: rgba(var(--hanko-ort-rgb), min(0.85, calc(var(--hanko-ort-zart) * var(--hanko-ort-dichte))));
+  --hanko-ort-zartton: rgba(var(--hanko-ort-rgb), min(0.85, calc(var(--hanko-ort-zart) * var(--hanko-ort-dichte))));
+  --hanko-ort-grund: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-flaeche) * var(--hanko-ort-dichte)));
+  background-color: var(--background-secondary);
+  background-image:
+    linear-gradient(var(--hanko-ort-zartton), var(--hanko-ort-zartton)),
+    linear-gradient(var(--hanko-ort-grund), var(--hanko-ort-grund));
   color: var(--hanko-tinte);
 }
 
 /* Geöffnete Notiz im Ort: Fläche im Ton, Schrift in Tinte */
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder-children .tree-item-self.is-active {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children .tree-item-self.is-active {
   color: var(--hanko-tinte);
   font-weight: 650;
 }
 
 /* Unterordner: Name in Tinte, Führungslinie im Ton */
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder .nav-folder-title {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children .nav-folder-title {
   color: var(--hanko-tinte);
 }
 
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) .nav-folder-children :is(.collapse-icon, .tree-item-icon, .iconize-icon) {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.collapse-icon, .tree-item-icon, .iconize-icon) {
   color: var(--hanko-tinte-3);
-}
-
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-children {
-  border-inline-start-width: 2px;
 }
 
 /* Lesezeichen: Gruppen tragen eine schmale Marke statt Fläche */
@@ -1707,7 +1741,7 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):ha
 /* Das rote Element der Schablone ist Signalrot. Auf den farbigen
    Ordnerköpfen folgt es der Schrift der Pille, damit es lesbar bleibt
    und Rot dem Siegel vorbehalten bleibt. */
-body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) > .nav-folder-title {
+body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) {
   --hanko-ikon-akzent: currentColor;
 }
 
@@ -1918,12 +1952,16 @@ body {
   border-radius: var(--hanko-radius);
 }
 
-/* Links in Bases wie in Notizen: Tinte, rote Unterstreichung */
+/* Links in Bases wie in Notizen: Tinte, rote Unterstreichung (Abschnitt 7).
+   Gruppenköpfe und Kartentitel bleiben ohne Linie, wie bei Obsidian. */
 .bases-view a.internal-link,
 .bases-view .internal-link {
   color: var(--hanko-tinte);
-  text-decoration-color: var(--hanko-rot);
-  text-underline-offset: 0.18em;
+}
+
+.bases-view .bases-group-heading .internal-link,
+.bases-view .bases-cards-property.mod-title .internal-link {
+  border-bottom: none;
 }
 
 /* Kanban: Spalten sind Bahnen auf dem Grund, Karten darin erhöht,
@@ -2085,7 +2123,8 @@ body {
   padding-block: 7px;
 }
 
-.is-phone .nav-files-container .nav-folder:not(.mod-root):has(> .nav-folder-title:not([data-path*="/"])) {
+body.is-phone .nav-files-container .nav-folder.is-collapsed > .nav-folder-title:not([data-path*="/"]),
+body.is-phone .nav-files-container .nav-folder-title:not([data-path*="/"]) ~ .nav-folder-children {
   margin-bottom: 5px;
 }
 
@@ -2166,6 +2205,7 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
 .callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li a.internal-link {
   font-weight: 650;
   text-decoration: none;
+  border-bottom: none;
 }
 
 .callout:is([data-callout="days"], [data-callout="weeks"]) > .callout-content > ul > li a.internal-link.is-unresolved {
@@ -2241,33 +2281,18 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
 }
 
 /* =========================================================
-   24. Readwise: Highlights als Fundstellen
+   24. Readwise: Cover und Quelle
    ========================================================= */
 
-/* Notizen aus dem Readwise-Plugin: Cover klein mit Schatten, jedes
-   Highlight mit „View Highlight“-Link als ruhige Karte, der Link als
-   kleine graue Quelle. Wirkt im Lesemodus. */
+/* Notizen aus dem Readwise-Plugin: Cover klein mit Schatten, der
+   „View Highlight“-Link als kleine graue Quelle. Wirkt im Lesemodus.
+   Karten um die Highlights gibt es nicht mehr: Dafür müsste das Theme das
+   Listenelement über seinen Link wählen, also mit einem Elternselektor. */
 .markdown-rendered img[alt="rw-book-cover"],
 .markdown-source-view img[alt="rw-book-cover"] {
   max-width: 7.5rem;
   border-radius: 6px;
   box-shadow: var(--hanko-schatten);
-}
-
-.markdown-rendered li:has(> a.external-link[href*="read.readwise.io"]),
-.markdown-rendered li:has(> p > a.external-link[href*="read.readwise.io"]) {
-  list-style: none;
-  margin: 0 0 0.6em -1.1em;
-  padding: 0.7em 0.95em;
-  border-radius: 14px;
-  background: var(--hanko-papier);
-  border: 1px solid var(--hanko-linie);
-  box-shadow: inset 3px 0 0 rgba(var(--hanko-rot-rgb), 0.55);
-}
-
-.markdown-rendered li:has(> a.external-link[href*="read.readwise.io"]) > .list-bullet,
-.markdown-rendered li:has(> p > a.external-link[href*="read.readwise.io"]) > .list-bullet {
-  display: none;
 }
 
 .markdown-rendered a.external-link[href*="read.readwise.io"] {
@@ -2276,6 +2301,7 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   letter-spacing: 0.02em;
   color: var(--hanko-tinte-3);
   text-decoration: none;
+  border-bottom: none;
   background-image: none;
   padding-right: 0;
 }
