@@ -2,6 +2,8 @@
 
 All notable changes to Hanko are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
 ## [1.0.1] - 2026-10-01
 
 Fixes the 63 warnings from the automated review on community.obsidian.md: 58 for `:has()` selectors and 5 for `text-decoration` properties that Obsidian 1.5.8 supports only partially. Apart from the points below, nothing changes on screen.
@@ -40,5 +42,6 @@ First release.
 - Style Settings options for the seal, colour, focus and form.
 - Mobile refinements.
 
+[Unreleased]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.1...HEAD
 [1.0.1]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/mdoroszewski/obsidian-hanko/releases/tag/1.0.0
