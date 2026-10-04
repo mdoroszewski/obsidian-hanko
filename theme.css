@@ -95,8 +95,8 @@ settings:
         value: hanko-tafel-hell-327
   -
     id: hanko-ordner-tinte
-    title: Do not colour folders
-    description: Top-level folders stay ink on paper instead of a Wada plate.
+    title: Do not colour folders and lanes
+    description: Top-level folders and Kanban lanes stay ink on paper instead of a Wada plate.
     type: class-toggle
     default: false
   -
@@ -2456,6 +2456,58 @@ body {
   background: var(--hanko-flaeche);
   border-radius: 999px;
   padding: 0.1em 0.6em;
+}
+
+/* 1.1 T1 · Bahnen tragen die Tafel nach Platz, wie die Orte in der Dateiliste:
+   Bahn 1 Raw Sienna, dann die Plätze 2 bis 4 der Tafel des Modus, ab Bahn 5
+   von vorn. Der Kopf ist die deckende Pille, die Bahn darunter die zarte
+   Fläche. Der Schalter „Do not colour folders and lanes“ nimmt es zurück. */
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper:nth-child(4n+1) .kanban-plugin__lane {
+  --hanko-ort-rgb: var(--hanko-tafel-1-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-1-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-1-dichte, 1);
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper:nth-child(4n+2) .kanban-plugin__lane {
+  --hanko-ort-rgb: var(--hanko-tafel-2-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-2-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-2-dichte, 1);
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper:nth-child(4n+3) .kanban-plugin__lane {
+  --hanko-ort-rgb: var(--hanko-tafel-3-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-3-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-3-dichte, 1);
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper:nth-child(4n+4) .kanban-plugin__lane {
+  --hanko-ort-rgb: var(--hanko-tafel-4-rgb);
+  --hanko-ort-schrift: var(--hanko-tafel-4-schrift);
+  --hanko-ort-dichte: var(--hanko-tafel-4-dichte, 1);
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane {
+  background-color: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-flaeche) * var(--hanko-ort-dichte)));
+  border-color: transparent;
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-header-wrapper {
+  --icon-color: var(--hanko-ort-schrift);
+  background-color: rgb(var(--hanko-ort-rgb));
+  color: var(--hanko-ort-schrift);
+  border-radius: var(--hanko-radius) var(--hanko-radius) 0 0;
+  padding-block: 10px;
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-header-wrapper .kanban-plugin__lane-title-text,
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-header-wrapper .kanban-plugin__lane-settings-button,
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-header-wrapper .kanban-plugin__lane-grip {
+  color: var(--hanko-ort-schrift);
+}
+
+body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-header-wrapper .kanban-plugin__lane-title-count {
+  color: var(--hanko-ort-schrift);
+  background-color: rgba(var(--hanko-papier-rgb), 0.35);
 }
 
 .kanban-plugin__item {
