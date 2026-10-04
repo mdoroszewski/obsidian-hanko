@@ -39,6 +39,7 @@ diff. Wrap lines at 72 characters.
 - The scope names the part of Obsidian or the plugin, for example `file-explorer`, `links`, `home-tab`, `readwise`, `bases`, `settings`.
 - One topic per commit.
 - Every change people can see gets an entry in `CHANGELOG.md` under "Unreleased".
+- Run `python3 tests/test_theme.py` before you commit. It checks the rules above and renders a fixture in headless Chrome when Chrome and Obsidian are installed.
 
 ## Releases
 
