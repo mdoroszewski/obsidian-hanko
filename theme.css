@@ -883,7 +883,8 @@ button.mod-warning:hover {
   background-color: var(--hanko-ok);
 }
 
-/* Erledigt: grüner Kreis mit Haken, nichts durchgestrichen */
+/* Auswahlpunkte mit feinem Rand; Farbe und Haken kommen aus den
+   Checkbox-Variablen in Abschnitt 3 */
 input[type="checkbox"] {
   border-width: 1.5px;
 }
@@ -1551,7 +1552,7 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   color: var(--hanko-tinte-3);
 }
 
-/* Lesezeichen: Gruppen tragen eine schmale Marke statt Fläche */
+/* Lesezeichen: Gruppen halbfett, sonst wie Obsidian */
 [data-type="bookmarks"] .tree-item-self.mod-collapsible .tree-item-inner {
   font-weight: 600;
 }
