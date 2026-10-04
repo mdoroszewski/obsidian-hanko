@@ -4,6 +4,8 @@ All notable changes to Hanko are documented here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-04
+
 Takes up what the ten most downloaded community themes do well, where it fits Hanko: the Minimal set of task states and helper classes, image and plugin refinements, a second stage of focus, and a colour concept that leans harder on the Wada plates. Everything that appears on hover is desktop only; iOS keeps `:hover` after a tap, so touch devices keep their header and bars.
 
 ### Added
@@ -73,6 +75,7 @@ First release.
 - Style Settings options for the seal, colour, focus and form.
 - Mobile refinements.
 
-[Unreleased]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/mdoroszewski/obsidian-hanko/releases/tag/1.0.0
