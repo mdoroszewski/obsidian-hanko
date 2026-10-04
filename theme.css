@@ -1164,6 +1164,35 @@ body.hanko-callout-normal .callout .callout-title-inner {
   background-color: var(--hanko-flaeche);
 }
 
+/* 1.1 A3 · Modifikatoren hinter dem Typ: [!note|no-title], |no-icon, |plain.
+   Sie nehmen weg, nie dazu. */
+.callout[data-callout-metadata*="no-title"] .callout-title {
+  display: none;
+}
+
+.callout[data-callout-metadata*="no-title"] .callout-content {
+  padding-top: 1em;
+}
+
+.callout[data-callout-metadata*="no-icon"] .callout-icon {
+  display: none;
+}
+
+.callout[data-callout-metadata*="plain"] {
+  background-color: transparent;
+  border-width: 0 0 0 2px;
+  border-color: rgb(var(--callout-color));
+  border-radius: 0;
+}
+
+.callout[data-callout-metadata*="plain"] .callout-title {
+  padding: 0.2em 0 0.2em 0.9em;
+}
+
+.callout[data-callout-metadata*="plain"] .callout-content {
+  padding: 0 0 0.2em 0.9em;
+}
+
 /* =========================================================
    9. Einstellungen und Fenster
    ========================================================= */
