@@ -1311,8 +1311,7 @@ body:not(.hanko-kein-abdruck) .empty-state-container::before {
 
 .empty-state-action:hover {
   color: var(--hanko-tinte);
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
+  border-bottom: 1px solid var(--hanko-rot);
 }
 
 /* Neuer Tab mit dem Plugin Home Tab: Siegel statt Obsidian-Logo.
