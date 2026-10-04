@@ -1701,6 +1701,65 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   border-color: var(--hanko-linie);
 }
 
+/* 1.1 B5 · Calendar: Tage in Tinte, heute als Ring und Punkte für vorhandene
+   Notizen in der Ankerfarbe (Platz 1 der Tafel, der Ort des Journals),
+   Wochentage als Beschriftung. */
+.workspace-leaf-content[data-type="calendar"] .container {
+  --color-background-day: transparent;
+  --color-background-weekend: transparent;
+  --color-background-weeknum: transparent;
+  --color-background-heading: transparent;
+  --color-dot: var(--hanko-fett);         /* Anker, Platz 1 der Tafel: der Ort des Journals */
+  --color-arrow: var(--hanko-tinte-3);
+  --color-button: var(--hanko-tinte-3);
+  --color-text-title: var(--hanko-tinte);
+  --color-text-heading: var(--hanko-tinte-3);
+  --color-text-day: var(--hanko-tinte);
+  --color-text-today: var(--hanko-fett);
+  --color-text-weeknum: var(--hanko-tinte-3);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar th {
+  font-size: 0.68em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .title {
+  letter-spacing: -0.02em;
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day {
+  border-radius: 999px;
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day:hover {
+  background-color: var(--hanko-flaeche-2);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day.active {
+  background-color: var(--hanko-flaeche-2);
+  color: var(--hanko-tinte);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day.today {
+  font-weight: 750;
+  box-shadow: inset 0 0 0 1.5px var(--hanko-fett);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day.weekend {
+  color: var(--hanko-tinte-2);
+}
+
+.workspace-leaf-content[data-type="calendar"] .calendar .day.adjacent-month {
+  color: var(--hanko-tinte-3);
+  opacity: 1;
+}
+
+}
+
 /* =========================================================
    13. Rollen-Callouts: die Bausteine der Kursseite in Notizen
    ========================================================= */
