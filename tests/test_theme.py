@@ -150,6 +150,16 @@ class ReviewRules(unittest.TestCase):
         hits = re.findall(r"text-decoration\s*:\s*[\w-]+\s+[\w#(-]", self.css)
         self.assertEqual(hits, [])
 
+    def test_no_multicolumn_properties(self):
+        """doiuse flags css-multicolumn (columns, column-*, break-*) for Obsidian 1.5.8."""
+        hits = re.findall(r"(?<![\w-])(?:columns|column-[\w-]+|break-(?:inside|before|after))\s*:", self.css)
+        self.assertEqual(hits, [])
+
+    def test_file_size_under_the_directory_limit(self):
+        """The directory warns above roughly 110 KiB (Purple Owl at 112 630 bytes passes,
+        Hanko 1.1.0 at 118 900 did not). Keep a margin."""
+        self.assertLessEqual(os.path.getsize(THEME), 110 * 1024)
+
     def test_nothing_loaded_from_outside(self):
         self.assertNotIn("@import", self.css)
         self.assertNotIn("@font-face", self.css)
