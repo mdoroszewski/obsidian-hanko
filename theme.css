@@ -1726,16 +1726,19 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
    12. Plugins: Farben aus dem Plugin auf Wada-Töne
    ========================================================= */
 
-/* Keep the Rhythm: Heatmap und Fortschritt in vier Grüntönen aus Wadas Buch
-   statt GitHub-Grün. Grün ist „Bestätigung“: geschrieben ist geschrieben.
-   Die Werte stehen am Container, damit sie die Einstellungen des Plugins
-   (am body gesetzt) überstimmen. */
+/* Keep the Rhythm: Heatmap und Fortschritt in der Tafel des Modus statt
+   GitHub-Grün (1.1 T7). Hell die warme Reihe aus Nr. 279: Vinaceous Cinnamon,
+   Ecru, Raw Sienna, dazu Burnt Sienna als gebranntes Raw Sienna (Nr. 285 mit
+   Peach Red und Turquoise Green). Dunkel die Grüne aus Nr. 293, ergänzt um
+   Diamine Green. Bis 1.0.1 stand hell dieselbe Grünreihe wie dunkel; sie
+   gehörte zur anderen Tafel. Die Werte stehen am Container, damit sie die
+   Einstellungen des Plugins (am body gesetzt) überstimmen. */
 .theme-light :is(.heatmap-wrapper, .heatmap, .today-progress-bar, .KTR-week-progress, .slot) {
   --light-0: var(--hanko-flaeche-2);
-  --light-1: #b5decc;  /* Turquoise Green */
-  --light-2: #96d1aa;  /* Cobalt Green */
-  --light-3: #489b6e;  /* Green */
-  --light-4: #1a7444;  /* Diamine Green */
+  --light-1: #eea78c;  /* Vinaceous Cinnamon, Nr. 279 */
+  --light-2: #c2ae93;  /* Ecru, Nr. 279 */
+  --light-3: #bb7125;  /* Raw Sienna, Nr. 279 */
+  --light-4: #ae5224;  /* Burnt Sienna */
 }
 
 .theme-dark :is(.heatmap-wrapper, .heatmap, .today-progress-bar, .KTR-week-progress, .slot) {
