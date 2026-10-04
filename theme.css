@@ -118,6 +118,30 @@ settings:
     type: class-toggle
     default: false
   -
+    id: hanko-kopfzeile-still
+    title: Note header appears on hover
+    description: Path and title of the note stay hidden until the pointer reaches the header. Desktop only; on touch devices the header stays visible.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-leisten-zurueck
+    title: Bars step back
+    description: Tab bar and status bar fade to 28 percent and return under the pointer. Desktop only.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-zeichen-blass
+    title: Fade Markdown syntax
+    description: In Live Preview, formatting marks such as ** and # become small and grey.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-aktive-zeile
+    title: Mark the active line
+    description: A thin grey line at the left edge of the line with the cursor while the editor has focus.
+    type: class-toggle
+    default: false
+  -
     id: hanko-abschnitt-form
     title: Form
     type: heading
@@ -1954,6 +1978,70 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
 
 @media (prefers-reduced-motion: reduce) {
   :is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > * {
+    transition: none;
+  }
+}
+
+/* 1.1 C · Bedienung tritt zurück. Alles, was erst unter dem Zeiger erscheint,
+   gilt nur auf Geräten mit Zeiger: Auf iOS bleibt :hover nach einem Tipp
+   kleben, und das iPad trägt in der Kopfzeile den Umschalter Lesen/Bearbeiten.
+   Deshalb @media (hover: hover) und body:not(.is-mobile), dazu :focus-within
+   für die Tastatur. */
+
+/* C1 · Kopfzeile der Notiz erst unter dem Zeiger. Die Aktionen rechts bleiben. */
+@media (hover: hover) {
+  body.hanko-kopfzeile-still:not(.is-mobile) .view-header .view-header-title-container {
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  body.hanko-kopfzeile-still:not(.is-mobile) .view-header:hover .view-header-title-container,
+  body.hanko-kopfzeile-still:not(.is-mobile) .view-header:focus-within .view-header-title-container {
+    opacity: 1;
+  }
+}
+
+/* C2 · Leisten treten zurück: Tableiste der Mitte und Statusleiste auf 28 %,
+   wie die Absätze im Fokus. Die mobile Leiste bleibt unberührt. */
+@media (hover: hover) {
+  body.hanko-leisten-zurueck:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container,
+  body.hanko-leisten-zurueck:not(.is-mobile) .status-bar {
+    opacity: 0.28;
+    transition: opacity 200ms ease;
+  }
+
+  body.hanko-leisten-zurueck:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container:hover,
+  body.hanko-leisten-zurueck:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container:focus-within,
+  body.hanko-leisten-zurueck:not(.is-mobile) .status-bar:hover,
+  body.hanko-leisten-zurueck:not(.is-mobile) .status-bar:focus-within {
+    opacity: 1;
+  }
+}
+
+/* C3 · Markdown-Zeichen klein und blass in Live Preview. Listenpunkte,
+   Aufgaben, Code und Links bleiben, Obsidian zeichnet sie selbst. Auf dem
+   Handy nur die Farbe, damit die Zeichen mit dem Finger erreichbar bleiben. */
+body.hanko-zeichen-blass .cm-s-obsidian span.cm-formatting:not(.cm-formatting-list):not(.cm-formatting-task):not(.cm-formatting-code):not(.cm-inline-code):not(.cm-formatting-link):not(.cm-formatting-link-string):not(.cm-formatting-math):not(.cm-formatting-escape) {
+  color: var(--hanko-tinte-3);
+  font-size: 0.85em;
+}
+
+body.is-phone.hanko-zeichen-blass .cm-s-obsidian span.cm-formatting {
+  font-size: inherit;
+}
+
+/* C4 · Aktive Zeile: feine Linie links in Tinte 3, kein Hintergrund, nur
+   solange der Editor den Cursor hat. Nicht auf dem Handy, dort fehlt der Rand. */
+body.hanko-aktive-zeile:not(.is-phone) .markdown-source-view.mod-cm6 .cm-focused .cm-line.cm-active {
+  box-shadow: inset 2px 0 0 var(--hanko-tinte-3);
+  transition: box-shadow 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.hanko-kopfzeile-still .view-header .view-header-title-container,
+  body.hanko-leisten-zurueck .workspace-tab-header-container,
+  body.hanko-leisten-zurueck .status-bar,
+  body.hanko-aktive-zeile .cm-line.cm-active {
     transition: none;
   }
 }
