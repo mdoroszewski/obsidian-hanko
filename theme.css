@@ -106,6 +106,12 @@ settings:
     type: class-toggle
     default: false
   -
+    id: hanko-flaechen-neutral
+    title: Neutral surfaces
+    description: Hover, selection and the second surface in grey instead of a whisper of the Wada plate (light No. 279, dark No. 293).
+    type: class-toggle
+    default: false
+  -
     id: hanko-abschnitt-fokus
     title: Focus
     type: heading
@@ -713,6 +719,32 @@ body {
 
   /* Rotes Element der Hanko-Schablonen im Icon-Paket für Iconize */
   --hanko-ikon-akzent: var(--hanko-rot);
+}
+
+/* 1.1 T6 · Flächen aus der Tafel. Wadas Buch zeigt Kombinationen, keine
+   Einzeltöne. Deshalb tragen die Zustandsflächen einen Hauch der Tafel des
+   Modus statt neutralem Grau: Fläche 2, Hover, Auswahl, Markierung der
+   Zeile unter dem Zeiger. Hell Platz 3 und 4 von Nr. 279 (Ecru, Vinaceous
+   Cinnamon), dunkel Platz 3 und 4 von Nr. 293 (Artemesia Green, Turquoise
+   Green). Text bleibt Tinte, Rot bleibt dem Siegel und den Fundstellen. */
+.theme-light:not(.hanko-flaechen-neutral) {
+  --hanko-flaeche-2: #ede9e1;                                   /* Ecru 14 % in Papier */
+  --background-modifier-hover: rgba(var(--hanko-tafel-4-rgb), 0.22);
+  --background-modifier-active-hover: rgba(var(--hanko-tafel-4-rgb), 0.34);
+  --text-selection: rgba(var(--hanko-tafel-4-rgb), 0.45);
+  --table-row-background-hover: rgba(var(--hanko-tafel-4-rgb), 0.16);
+  --nav-item-background-selected: rgba(var(--hanko-tafel-3-rgb), 0.3);
+  --scrollbar-thumb-bg: rgba(var(--hanko-tafel-3-rgb), 0.6);
+}
+
+.theme-dark:not(.hanko-flaechen-neutral) {
+  --hanko-flaeche-2: #1e2423;                                   /* Artemesia Green 14 % in Black */
+  --background-modifier-hover: rgba(var(--hanko-tafel-4-rgb), 0.12);
+  --background-modifier-active-hover: rgba(var(--hanko-tafel-4-rgb), 0.2);
+  --text-selection: rgba(var(--hanko-tafel-4-rgb), 0.3);
+  --table-row-background-hover: rgba(var(--hanko-tafel-4-rgb), 0.1);
+  --nav-item-background-selected: rgba(var(--hanko-tafel-3-rgb), 0.3);
+  --scrollbar-thumb-bg: rgba(var(--hanko-tafel-3-rgb), 0.55);
 }
 
 /* =========================================================
