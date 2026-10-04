@@ -3083,7 +3083,6 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
 
   .callout,
   .markdown-embed {
-    break-inside: avoid;
     box-shadow: none;
   }
 
