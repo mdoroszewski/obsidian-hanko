@@ -62,7 +62,7 @@ settings:
         label: Anchor (Burnt Sienna, dark Raw Sienna)
         value: hanko-fett-anker
       -
-        label: Indigo (Deep Lyons Blue, dark Salvia Blue)
+        label: Indigo (Dark Tyrian Blue, dark Salvia Blue)
         value: hanko-fett-indigo
       -
         label: Red (Brick Red, dark Peach Red)
@@ -227,7 +227,7 @@ settings:
   --hanko-tinte-2: #5a5853;
   --hanko-tinte-3: #8b8982;
   --hanko-rot: #dd4027;
-  --hanko-indigo: #1c4286;
+  --hanko-indigo: #12354e;                /* Dark Tyrian Blue, Platz 2 von Nr. 279 (1.1: vorher Deep Lyons Blue) */
   --hanko-ocker: #bb7125;
   --hanko-pflaume: #8c4c62;
   --hanko-ok: #1a7444;
@@ -238,7 +238,7 @@ settings:
   --hanko-tinte-2-rgb: 90, 88, 83;
   --hanko-tinte-3-rgb: 139, 137, 130;
   --hanko-rot-rgb: 221, 64, 39;
-  --hanko-indigo-rgb: 28, 66, 134;
+  --hanko-indigo-rgb: 18, 53, 78;
   --hanko-ocker-rgb: 187, 113, 37;
   --hanko-pflaume-rgb: 140, 76, 98;
   --hanko-ok-rgb: 26, 116, 68;
@@ -352,7 +352,7 @@ settings:
 }
 
 /* Fett: wählbare Töne, je hell und dunkel, alle ab 4,5 zu 1 */
-.theme-light.hanko-fett-indigo { --hanko-fett: #1c4286; --hanko-fett-rgb: 28, 66, 134; }    /* Deep Lyons Blue */
+.theme-light.hanko-fett-indigo { --hanko-fett: #12354e; --hanko-fett-rgb: 18, 53, 78; }     /* Dark Tyrian Blue */
 .theme-dark.hanko-fett-indigo { --hanko-fett: #97acc8; --hanko-fett-rgb: 151, 172, 200; }   /* Salvia Blue */
 .theme-light.hanko-fett-rot { --hanko-fett: #a84222; --hanko-fett-rgb: 168, 66, 34; }       /* Brick Red */
 .theme-dark.hanko-fett-rot { --hanko-fett: #f15a30; --hanko-fett-rgb: 241, 90, 48; }        /* Peach Red */
