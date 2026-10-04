@@ -209,14 +209,10 @@ settings:
     default: false
 */
 
-/* =========================================================
-   1. Werte
-   ========================================================= */
+/* 1. Werte */
 
 .theme-light {
   color-scheme: light;
-  /* Grund: Beton, aus Wadas Warm Gray (#a1a39a) zu 24 Prozent in Papier.
-     Rahmen, Seitenleisten und Tabs stehen auf Beton, die Notiz auf Papier. */
   --hanko-grund: #e0e0db;
   --hanko-grund-rgb: 224, 224, 219;
   --hanko-papier: #f4f3ef;
@@ -254,8 +250,6 @@ settings:
   --hanko-fett: #ae5224;
   --hanko-fett-rgb: 174, 82, 36;
 
-  /* Orte hell: Wadas Tafel Nr. 279. Schrift auf der Pille ab 4,5 zu 1.
-     Blasse Töne bekommen dichtere Flächen, damit ein offener Ordner sichtbar bleibt. */
   --hanko-tafel-1-rgb: 187, 113, 37;   /* Raw Sienna          #bb7125, Schrift 4,8 – Ankerfarbe */
   --hanko-tafel-1-schrift: #151515;
   --hanko-tafel-2-rgb: 18, 53, 78;     /* Dark Tyrian Blue    #12354e, Schrift 12,5 */
@@ -267,8 +261,6 @@ settings:
   --hanko-tafel-4-schrift: #151515;
   --hanko-tafel-4-dichte: 2;
 
-  /* Orte: Archiv und Ordner ohne Ton in Wadas Warm Gray (#a1a39a), dem Ton,
-     aus dem der Beton gemischt ist. Schrift 7,2 zu 1. Dichte der Flächen. */
   --hanko-beton-rgb: 161, 163, 154;
   --hanko-beton-schrift: var(--hanko-tinte);
   --hanko-ort-flaeche: 0.1;
@@ -280,8 +272,6 @@ settings:
 
 .theme-dark {
   color-scheme: dark;
-  /* Grund: Wadas Black (#111314), die häufigste Farbe im Buch.
-     Sie steht mit Raw Sienna und Peach Red in Nr. 298. */
   --hanko-grund: #111314;
   --hanko-grund-rgb: 17, 19, 20;
   --hanko-papier: #111314;
@@ -319,8 +309,6 @@ settings:
   --hanko-fett: #bb7125;
   --hanko-fett-rgb: 187, 113, 37;
 
-  /* Orte dunkel: Wadas Tafel Nr. 293, alle Töne ab 5 zu 1 gegen Schwarz,
-     Schrift auf der Pille dunkel. */
   --hanko-tafel-1-rgb: 187, 113, 37;   /* Raw Sienna       #bb7125, Schrift 4,8 – Ankerfarbe */
   --hanko-tafel-1-schrift: #151515;
   --hanko-tafel-2-rgb: 72, 155, 110;   /* Green            #489b6e, Schrift 5,4 */
@@ -340,8 +328,6 @@ settings:
   --hanko-ort-zart: 0.3;
 }
 
-/* Orte hell, Ausweiche: Wadas Tafel Nr. 327. Raw Sienna und Ecru wie in Nr. 279,
-   es wechseln nur Platz 2 und 4. Alle Pillen mit dunkler Schrift. */
 .theme-light.hanko-tafel-hell-327 {
   --hanko-tafel-2-rgb: 243, 127, 148;  /* Eosine Pink         #f37f94, Schrift 7,2 */
   --hanko-tafel-2-schrift: #151515;
@@ -365,9 +351,7 @@ settings:
 .theme-light.hanko-fett-tinte,
 .theme-dark.hanko-fett-tinte { --hanko-fett: var(--hanko-tinte); --hanko-fett-rgb: var(--hanko-tinte-rgb); }
 
-/* =========================================================
-   2. Form: Schrift, Radien, Maße
-   ========================================================= */
+/* 2. Form: Schrift, Radien, Maße */
 
 body {
   --hanko-radius: 18px;
@@ -375,9 +359,6 @@ body {
   --hanko-schrift: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --hanko-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* The seal: square name stamp with frame and the letter H, used as a mask.
-     Grid 120, uneven ink. Colour comes from --hanko-rot, so it works in
-     light and dark. Replace --hanko-siegel in a snippet for your own mark. */
   --hanko-siegel: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cfilter id='f' x='-8%25' y='-8%25' width='116%25' height='116%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2' seed='4' result='w'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='w' scale='4' xChannelSelector='R' yChannelSelector='G' result='r'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='9' result='g'/%3E%3CfeColorMatrix in='g' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -6 0 0 0 4.7' result='s'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018' numOctaves='1' seed='6' result='lo'/%3E%3CfeColorMatrix in='lo' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0.55' result='d'/%3E%3CfeComposite in='r' in2='s' operator='in' result='a'/%3E%3CfeComposite in='a' in2='d' operator='in'/%3E%3C/filter%3E%3Cmask id='m'%3E%3Crect x='8' y='8' width='104' height='104' rx='14' fill='%23fff'/%3E%3Crect x='15' y='15' width='90' height='90' rx='8' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M40 34v52M80 34v52M40 60h40' stroke='%23000' stroke-width='10' fill='none' stroke-linecap='square'/%3E%3Cpath d='M51 60h18' stroke='%23fff' stroke-width='0'/%3E%3C/mask%3E%3C/defs%3E%3Crect x='8' y='8' width='104' height='104' rx='14' fill='%23000' mask='url(%23m)' filter='url(%23f)'/%3E%3C/svg%3E");
   --hanko-siegel-groesse: 3.7rem;
 
@@ -474,9 +455,7 @@ body {
   --modal-border-width: 1px;
 }
 
-/* =========================================================
-   3. Farben auf Obsidians Variablen
-   ========================================================= */
+/* 3. Farben auf Obsidians Variablen */
 
 .theme-light,
 .theme-dark {
@@ -533,8 +512,6 @@ body {
   --text-accent: var(--hanko-tinte);
   --text-accent-hover: var(--hanko-rot);
 
-  /* Akzent: Rot für „jetzt handeln“, Knöpfe in Tinte.
-     Auch die HSL-Werte, damit die Akzentfarbe aus den Einstellungen nicht durchscheint. */
   --color-accent-hsl: var(--hanko-rot-hsl);
   --interactive-accent-hsl: var(--hanko-rot-hsl);
   --color-accent: var(--hanko-rot);
@@ -708,8 +685,6 @@ body {
   --graph-node-attachment: var(--hanko-indigo);
   --canvas-background: var(--hanko-papier);
   --canvas-dot-pattern: var(--hanko-linie);
-  /* Canvas: die vier Farben der Ordner-Tafel (hell 279, dunkel 293),
-     dazu Signalrot und Grau. Farbe 1 ist die Ankerfarbe Raw Sienna. */
   --canvas-color-1: var(--hanko-tafel-1-rgb);
   --canvas-color-2: var(--hanko-tafel-2-rgb);
   --canvas-color-3: var(--hanko-tafel-3-rgb);
@@ -721,9 +696,6 @@ body {
   --hanko-ikon-akzent: var(--hanko-rot);
 }
 
-/* 1.1 T6 · Flächen aus der Tafel: Fläche 2, Hover und Auswahl tragen einen
-   Hauch der Plätze 3 und 4 der Tafel des Modus statt neutralem Grau.
-   Wadas Buch zeigt Kombinationen, keine Einzeltöne. Text bleibt Tinte. */
 .theme-light:not(.hanko-flaechen-neutral) {
   --hanko-flaeche-2: #ede9e1;                                   /* Ecru 14 % in Papier */
   --background-modifier-hover: rgba(var(--hanko-tafel-4-rgb), 0.22);
@@ -744,9 +716,7 @@ body {
   --scrollbar-thumb-bg: rgba(var(--hanko-tafel-3-rgb), 0.55);
 }
 
-/* =========================================================
-   4. Gerüst
-   ========================================================= */
+/* 4. Gerüst */
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -827,9 +797,7 @@ body.hanko-rollbalken-aus ::-webkit-scrollbar {
   display: none;
 }
 
-/* =========================================================
-   5. Glas: nur für Schwebendes
-   ========================================================= */
+/* 5. Glas: nur für Schwebendes */
 
 .menu,
 .suggestion-container,
@@ -916,8 +884,6 @@ body.hanko-fussleiste-fest .status-bar {
   box-shadow: var(--hanko-schatten);
 }
 
-/* Handy: Leiste unten als Glaspille. Die schwebende Leiste neuerer
-   Obsidian-Versionen (is-floating-nav) positioniert sich selbst. */
 body.is-mobile:not(.is-floating-nav) .mobile-navbar {
   left: 0.5rem;
   right: 0.5rem;
@@ -925,9 +891,7 @@ body.is-mobile:not(.is-floating-nav) .mobile-navbar {
   border-radius: 26px;
 }
 
-/* =========================================================
-   6. Bedienung: Knöpfe, Schalter, Häkchen
-   ========================================================= */
+/* 6. Bedienung: Knöpfe, Schalter, Häkchen */
 
 button:not(.clickable-icon) {
   font-weight: 500;
@@ -960,15 +924,11 @@ button.mod-warning:hover {
   background-color: var(--hanko-ok);
 }
 
-/* Auswahlpunkte mit feinem Rand; Farbe und Haken kommen aus den
-   Checkbox-Variablen in Abschnitt 3 */
 input[type="checkbox"] {
   border-width: 1.5px;
 }
 
-/* =========================================================
-   7. Inhalt
-   ========================================================= */
+/* 7. Inhalt */
 
 /* Titel */
 .inline-title {
@@ -1014,10 +974,6 @@ body:not(.hanko-keine-h2-linie) .markdown-rendered .inline-title + h2 {
   letter-spacing: 0.12em;
 }
 
-/* Links: Text in Tinte, Unterstreichung rot.
-   Die rote Linie ist ein feiner Rand unter dem Wort. Obsidians eigene
-   Unterstreichung schalten die Link-Variablen an den Links ab, auch beim
-   Überfahren. */
 .markdown-rendered a.internal-link,
 .markdown-rendered a.external-link,
 .cm-s-obsidian span.cm-hmd-internal-link,
@@ -1099,7 +1055,6 @@ body:not(.hanko-keine-h2-linie) .markdown-rendered .inline-title + h2 {
   border-radius: 10px;
 }
 
-/* 1.1 B2 · Bild vergrößern, solange man klickt und hält. Der Zeiger sagt es. */
 body:not(.hanko-kein-bildzoom) .markdown-rendered .image-embed img {
   cursor: zoom-in;
   transition: transform 160ms ease;
@@ -1119,8 +1074,6 @@ body:not(.hanko-kein-bildzoom) .markdown-rendered .image-embed img:active {
   }
 }
 
-/* 1.1 B1 · Bildunterschrift aus dem Alt-Text, klein und grau unter dem Bild.
-   Nur im Lesemodus, nicht für Dateinamen und das Readwise-Cover. */
 body.hanko-bild-unterschrift .markdown-rendered .image-embed[alt]:not([alt$=".png" i]):not([alt$=".jpg" i]):not([alt$=".jpeg" i]):not([alt$=".gif" i]):not([alt$=".webp" i]):not([alt$=".svg" i]):not([alt$=".avif" i]):not([alt$=".bmp" i]):not([alt="rw-book-cover"]) {
   display: inline-block;
   text-align: center;
@@ -1170,8 +1123,6 @@ body.hanko-bild-unterschrift .markdown-rendered .image-embed[alt]:not([alt$=".pn
   color: var(--hanko-tinte-3);
 }
 
-/* 1.1 B7 · Nahtlose Embeds: ohne Karte und Titel, als Teil der Notiz.
-   Der kleine Link zur Quelle bleibt. */
 body.hanko-embed-nahtlos .markdown-embed {
   background-color: transparent;
   border: none;
@@ -1241,9 +1192,7 @@ body.hanko-embed-nahtlos .markdown-embed .markdown-embed-content > .markdown-pre
   color: var(--hanko-tinte-2);
 }
 
-/* =========================================================
-   8. Callouts: flache Karte, Zeichen in Farbe, Titel in Tinte
-   ========================================================= */
+/* 8. Callouts: flache Karte, Zeichen in Farbe, Titel in Tinte */
 
 .callout {
   background-color: var(--hanko-papier);
@@ -1296,8 +1245,6 @@ body.hanko-callout-normal .callout .callout-title-inner {
   background-color: var(--hanko-flaeche);
 }
 
-/* 1.1 A3 · Modifikatoren hinter dem Typ: [!note|no-title], |no-icon, |plain.
-   Sie nehmen weg, nie dazu. */
 .callout[data-callout-metadata*="no-title"] .callout-title {
   display: none;
 }
@@ -1325,9 +1272,7 @@ body.hanko-callout-normal .callout .callout-title-inner {
   padding: 0 0 0.2em 0.9em;
 }
 
-/* =========================================================
-   9. Einstellungen und Fenster
-   ========================================================= */
+/* 9. Einstellungen und Fenster */
 
 .modal {
   box-shadow: var(--hanko-schatten);
@@ -1354,14 +1299,8 @@ body.hanko-callout-normal .callout .callout-title-inner {
   color: var(--hanko-tinte-2);
 }
 
-/* =========================================================
-   10. Siegel: das eine rote Zeichen
-   ========================================================= */
+/* 10. Siegel: das eine rote Zeichen */
 
-/* Auf Notizen, die du abzeichnest: Eigenschaft cssclasses mit dem Wert seal.
-   Mit dem Schalter „Siegel auf jeder Notiz“ überall. Oben rechts, wie ein
-   Stempel auf einem Blatt. Ohne Inline-Titel bekommt der Abdruck einen
-   eigenen Streifen, mit Inline-Titel steht er rechts neben dem Titel. */
 body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6 > .cm-editor > .cm-scroller > .cm-sizer,
 body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .workspace-leaf-content[data-type="markdown"] .markdown-reading-view > .markdown-preview-view > .markdown-preview-sizer,
 body:not(.hanko-kein-abdruck) .workspace-leaf-content[data-type="markdown"] .markdown-source-view.mod-cm6.seal > .cm-editor > .cm-scroller > .cm-sizer,
@@ -1480,11 +1419,6 @@ body:not(.hanko-kein-abdruck) .empty-state-container::before {
   border-bottom: 1px solid var(--hanko-rot);
 }
 
-/* Neuer Tab mit dem Plugin Home Tab: Siegel statt Obsidian-Logo.
-   Das Logo-SVG selbst wird zum Abdruck: sein Inhalt verschwindet, die
-   Fläche ist Siegelrot, die Form kommt aus der Maske. Eigene Bilder als
-   Logo (img) bleiben unberührt. Der Container hebt die Gewichtung über die
-   Größenregel des Plugins. */
 body:not(.hanko-kein-abdruck) .home-tab-wordmark-container .home-tab-logo > svg {
   display: block;
   width: 4.6rem;
@@ -1547,18 +1481,8 @@ body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
   letter-spacing: -0.01em;
 }
 
-/* =========================================================
-   11. Orte: die oberste Ordnerebene auf Wadas Tafeln Nr. 279 und Nr. 293
-   ========================================================= */
+/* 11. Orte: die oberste Ordnerebene auf Wadas Tafeln Nr. 279 und Nr. 293 */
 
-/* Jeder Ordner der obersten Ebene ist ein Ort mit einer Farbe der Tafel:
-   hell Nr. 279, dunkel Nr. 293.
-   Die Farbe hängt am ersten Zeichen des Namens (Ziffer oder Buchstabe),
-   nicht an der Position. So bleibt sie beim Scrollen stabil.
-   Ohne passenden Ton und im Archiv: Beton.
-   Oberste Ebene heißt: Pfad ohne „/“. Den Ton tragen der Kopf des Ortes
-   und sein Inhalt, das Geschwister .nav-folder-children. So braucht es
-   keinen Elternselektor. */
 .nav-files-container .nav-folder-title:not([data-path*="/"]),
 .nav-files-container .nav-folder-title:not([data-path*="/"]) ~ .nav-folder-children {
   --hanko-ort-rgb: var(--hanko-beton-rgb);
@@ -1630,16 +1554,10 @@ body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
   --hanko-ort-dichte: 1;
 }
 
-/* Abstand zwischen den Orten: zugeklappt unter dem Kopf, offen unter dem Inhalt */
 body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder.is-collapsed > .nav-folder-title:not([data-path*="/"]) {
   margin-bottom: 3px;
 }
 
-/* Fläche des Ortes: Der Inhalt trägt den Ton und läuft über die volle
-   Breite. Er reicht 12 px hinter den Kopf (14 px abzüglich 2 px Abstand
-   unter dem Kopf), damit die Fläche die Pille seitlich umfasst; der Kopf
-   liegt als positioniertes Element darüber. Die Führungslinie ist ein
-   schmaler Verlauf an der Stelle des Einzugs. */
 body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) ~ .nav-folder-children {
   --nav-item-background-hover: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-hover) * var(--hanko-ort-dichte)));
   --nav-item-background-active: rgba(var(--hanko-ort-rgb), calc(var(--hanko-ort-aktiv) * var(--hanko-ort-dichte)));
@@ -1683,9 +1601,6 @@ body:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder
   filter: brightness(1.12);
 }
 
-/* Zart: die Tafel als durchscheinende Fläche, Namen in Tinte.
-   Die Pille wird auf dem Grund der Seitenleiste deckend gemischt (zarter Ton
-   über der Fläche des Ortes), damit die Fläche dahinter nicht durchscheint. */
 body.hanko-ordner-zart:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]),
 body.hanko-ordner-zart:not(.hanko-ordner-tinte):not(.is-grabbing) .nav-files-container .nav-folder-title:not([data-path*="/"]):hover {
   --hanko-ort-schrift: var(--hanko-tinte);
@@ -1718,14 +1633,8 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   font-weight: 600;
 }
 
-/* =========================================================
-   12. Plugins: Farben aus dem Plugin auf Wada-Töne
-   ========================================================= */
+/* 12. Plugins: Farben aus dem Plugin auf Wada-Töne */
 
-/* Keep the Rhythm: Heatmap und Fortschritt in der Tafel des Modus (1.1 T7).
-   Hell die warme Reihe aus Nr. 279 plus Burnt Sienna, dunkel die Grüne aus
-   Nr. 293 plus Diamine Green. Die Werte stehen am Container, damit sie die
-   Einstellungen des Plugins (am body gesetzt) überstimmen. */
 .theme-light :is(.heatmap-wrapper, .heatmap, .today-progress-bar, .KTR-week-progress, .slot) {
   --light-0: var(--hanko-flaeche-2);
   --light-1: #eea78c;  /* Vinaceous Cinnamon, Nr. 279 */
@@ -1753,9 +1662,6 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   border-color: var(--hanko-linie);
 }
 
-/* 1.1 B5 · Calendar: Tage in Tinte, heute als Ring und Punkte für vorhandene
-   Notizen in der Ankerfarbe (Platz 1 der Tafel, der Ort des Journals),
-   Wochentage als Beschriftung. */
 .workspace-leaf-content[data-type="calendar"] .container {
   --color-background-day: transparent;
   --color-background-weekend: transparent;
@@ -1810,8 +1716,6 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   opacity: 1;
 }
 
-/* 1.1 B6 · Tasks: Daten, Rückverweise und Werkzeuge klein und grau wie
-   Quellenverweise. Das Prioritätszeichen bleibt, es ist schon eine Form. */
 .task-list-item .task-due,
 .task-list-item .task-scheduled,
 .task-list-item .task-start,
@@ -1864,12 +1768,8 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   color: var(--hanko-tinte-2);
 }
 
-/* =========================================================
-   13. Rollen-Callouts: die Bausteine der Kursseite in Notizen
-   ========================================================= */
+/* 13. Rollen-Callouts: die Bausteine der Kursseite in Notizen */
 
-/* Name deutsch, dazu ein englischer Zweitname. Titel selbst setzen,
-   z. B. „> [!pruefen] Selbsttest“. Farbe nach der Rolle in Farben.md. */
 .callout:is([data-callout="pruefen"], [data-callout="recall"]) {
   --callout-color: var(--hanko-indigo-rgb);
   --callout-icon: lucide-circle-check;
@@ -1910,22 +1810,14 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   --callout-icon: lucide-timer;
 }
 
-/* Erhöht heißt handeln: Prüfen, Vorab und Aufgabe sind Karten zum Antworten */
 .callout:is([data-callout="pruefen"], [data-callout="recall"], [data-callout="vorab"], [data-callout="upfront"], [data-callout="aufgabe"], [data-callout="exercise"]) {
   background-color: var(--hanko-flaeche);
   border-radius: var(--hanko-radius-erhoeht);
   box-shadow: var(--hanko-schatten);
 }
 
-/* =========================================================
-   14. Belegstufen: Tags #evidence/… mit Form und Farbe
-   ========================================================= */
+/* 14. Belegstufen: Tags #evidence/… mit Form und Farbe */
 
-/* strong = gut belegt (voller Kreis, Grün), partial = teilweise belegt
-   (halber Kreis, Ocker), contested = umstritten (gestrichelter Ring, Blau),
-   untestable = kaum prüfbar (gepunkteter Ring, Grau), refuted = nicht
-   haltbar (Ring mit Schrägstrich, Rot). Nie Farbe allein: Form und Wort
-   tragen die Bedeutung mit. Text bleibt Tinte. */
 .markdown-rendered a.tag[href="#evidence/strong" i],
 .cm-s-obsidian .cm-hashtag.cm-tag-evidencestrong { --hanko-beleg-rgb: var(--hanko-ok-rgb); }
 .markdown-rendered a.tag[href="#evidence/partial" i],
@@ -1984,12 +1876,8 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   background: linear-gradient(135deg, transparent 43%, rgb(var(--hanko-beleg-rgb)) 43%, rgb(var(--hanko-beleg-rgb)) 57%, transparent 57%);
 }
 
-/* =========================================================
-   15. Fokus: eine Aufgabe im Blick
-   ========================================================= */
+/* 15. Fokus: eine Aufgabe im Blick */
 
-/* Schalter in Style Settings oder cssclasses focus. Solange der Editor den
-   Cursor hat, steht nur der Absatz mit dem Cursor in voller Tinte. */
 :is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .cm-content > *,
 :is(body.hanko-fokus .markdown-source-view.mod-cm6, .markdown-source-view.mod-cm6.focus) .cm-editor.cm-focused .metadata-container {
   transition: opacity 240ms ease;
@@ -2010,12 +1898,6 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   }
 }
 
-/* 1.1 C · Bedienung tritt zurück. Was erst unter dem Zeiger erscheint, gilt
-   nur mit Zeiger: Auf iOS klebt :hover nach einem Tipp, und das iPad trägt
-   in der Kopfzeile den Umschalter Lesen/Bearbeiten. Daher @media (hover:
-   hover) und body:not(.is-mobile), :focus-within für die Tastatur. */
-
-/* C1 · Kopfzeile der Notiz erst unter dem Zeiger. Die Aktionen rechts bleiben. */
 @media (hover: hover) {
   body.hanko-kopfzeile-still:not(.is-mobile) .view-header .view-header-title-container {
     opacity: 0;
@@ -2028,8 +1910,6 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   }
 }
 
-/* C2 · Leisten treten zurück: Tableiste der Mitte und Statusleiste auf 28 %,
-   wie die Absätze im Fokus. Die mobile Leiste bleibt unberührt. */
 @media (hover: hover) {
   body.hanko-leisten-zurueck:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container,
   body.hanko-leisten-zurueck:not(.is-mobile) .status-bar {
@@ -2045,9 +1925,6 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   }
 }
 
-/* C3 · Markdown-Zeichen klein und blass in Live Preview. Listen, Aufgaben,
-   Code und Links bleiben. Auf dem Handy nur die Farbe, der Finger braucht
-   die Größe. */
 body.hanko-zeichen-blass .cm-s-obsidian span.cm-formatting:not(.cm-formatting-list):not(.cm-formatting-task):not(.cm-formatting-code):not(.cm-inline-code):not(.cm-formatting-link):not(.cm-formatting-link-string):not(.cm-formatting-math):not(.cm-formatting-escape) {
   color: var(--hanko-tinte-3);
   font-size: 0.85em;
@@ -2057,8 +1934,6 @@ body.is-phone.hanko-zeichen-blass .cm-s-obsidian span.cm-formatting {
   font-size: inherit;
 }
 
-/* C4 · Aktive Zeile: feine Linie links in Tinte 3, kein Hintergrund, nur
-   solange der Editor den Cursor hat. Nicht auf dem Handy, dort fehlt der Rand. */
 body.hanko-aktive-zeile:not(.is-phone) .markdown-source-view.mod-cm6 .cm-focused .cm-line.cm-active {
   box-shadow: inset 2px 0 0 var(--hanko-tinte-3);
   transition: box-shadow 120ms ease;
@@ -2073,28 +1948,14 @@ body.hanko-aktive-zeile:not(.is-phone) .markdown-source-view.mod-cm6 .cm-focused
   }
 }
 
-/* =========================================================
-   16. Schablonen als Ordnerzeichen (Icon-Paket „hanko“ für Iconize)
-   ========================================================= */
+/* 16. Schablonen als Ordnerzeichen (Icon-Paket „hanko“ für Iconize) */
 
-/* Das rote Element der Schablone ist Signalrot. Auf den farbigen
-   Ordnerköpfen folgt es der Schrift der Pille, damit es lesbar bleibt
-   und Rot dem Siegel vorbehalten bleibt. */
 body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-title:not([data-path*="/"]) {
   --hanko-ikon-akzent: currentColor;
 }
 
-/* =========================================================
-   17. Aufgaben mit Bullet-Journal-Zeichen
-   ========================================================= */
+/* 17. Aufgaben mit Bullet-Journal-Zeichen */
 
-/* Runde Auswahlpunkte, ein Zeichen je Zustand, nie Farbe allein.
-   Bullet Journal (> < / - ? !) und seit 1.1 der Satz von Minimal
-   (* " i I b l p c k f w u d S), Strichzeichen in Tinte 2 im Ring.
-   Rollentöne, wo die Bedeutung eine Rolle hat: p Grün, f Rot als Ring,
-   * Anker, c Tinte. [ ] und [x] kommen aus den Checkbox-Variablen.
-   Jeder Zustand setzt Zeichen und Ton als Variablen am Element mit
-   data-task; das Feld erbt sie, eine gemeinsame Regel zeichnet alle. */
 [data-task=">"] { --hanko-task: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); --hanko-task-ton: var(--hanko-tinte-2); }  /* verschoben */
 [data-task="<"] { --hanko-task: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 12H6M11 6l-6 6 6 6' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); --hanko-task-ton: var(--hanko-tinte-2); }  /* eingeplant */
 [data-task="-"] { --hanko-task: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12h12' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); --hanko-task-ton: var(--hanko-tinte-3); --hanko-task-rand: dashed; }  /* verworfen: grau, gestrichelt */
@@ -2142,13 +2003,8 @@ input[type=checkbox]:is([data-task=">"], [data-task="<"], [data-task="-"], [data
   text-decoration: none;
 }
 
-/* =========================================================
-   18. Daily Page: Daily Notes mit cssclasses daily-page
-   ========================================================= */
+/* 18. Daily Page: Daily Notes mit cssclasses daily-page */
 
-/* Der Titel der Notiz (Datum und Wochentag) steht groß, darüber die
-   Beschriftung „Daily Page“ mit rotem Punkt, wie der Seitenkopf der
-   Kursseite. Gilt auch, wenn der Inline-Titel sonst ausgeschaltet ist. */
 body :is(.markdown-source-view, .markdown-preview-view):is(.daily-page, .weekly-page, .monthly-page) .inline-title:not([data-level]) {
   display: block;
   font-size: clamp(2em, 4.6vw, 2.7em);
@@ -2180,8 +2036,6 @@ body :is(.markdown-source-view, .markdown-preview-view).monthly-page .inline-tit
   content: "Monthly Page";
 }
 
-/* Die Karten des Tages (Memento Mori, Daily Stoic, Actions) wie der Fahrplan:
-   flache Karte, Strich oben in der Farbe der Karte, ruhig und kompakt. */
 :is(.markdown-source-view, .markdown-preview-view).daily-page .callout:is([data-callout="memento-mori"], [data-callout="daily-stoic"], [data-callout="actions"]) {
   border-top: 3px solid rgb(var(--callout-color));
   border-radius: var(--hanko-radius);
@@ -2220,12 +2074,8 @@ body :is(.markdown-source-view, .markdown-preview-view).monthly-page .inline-tit
   border-radius: 999px;
 }
 
-/* =========================================================
-   19. Bases und Kanban: Karten, Bahnen, Beschriftungen
-   ========================================================= */
+/* 19. Bases und Kanban: Karten, Bahnen, Beschriftungen */
 
-/* Bases: Tabellenkopf als Beschriftung, nur Haarlinien quer,
-   Karten flach auf Papier */
 body {
   --bases-table-header-weight: 800;
   --bases-table-header-color: var(--hanko-tinte-3);
@@ -2257,8 +2107,6 @@ body {
   border-radius: var(--hanko-radius);
 }
 
-/* Links in Bases wie in Notizen: Tinte, rote Unterstreichung (Abschnitt 7).
-   Gruppenköpfe und Kartentitel bleiben ohne Linie, wie bei Obsidian. */
 .bases-view a.internal-link,
 .bases-view .internal-link {
   color: var(--hanko-tinte);
@@ -2269,8 +2117,6 @@ body {
   border-bottom: none;
 }
 
-/* Kanban: Spalten sind Bahnen auf dem Grund, Karten darin erhöht,
-   weil man an ihnen arbeitet */
 .kanban-plugin__lane {
   background-color: var(--hanko-grund);
   border: 1px solid transparent;
@@ -2301,9 +2147,6 @@ body {
   padding: 0.1em 0.6em;
 }
 
-/* 1.1 T1 · Bahnen tragen die Tafel nach Platz wie die Orte: Bahn 1 Raw
-   Sienna, dann Platz 2 bis 4, ab Bahn 5 von vorn. Kopf als deckende Pille,
-   Bahn als zarte Fläche. „Do not colour folders and lanes“ nimmt es zurück. */
 body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper:nth-child(4n+1) .kanban-plugin__lane {
   --hanko-ort-rgb: var(--hanko-tafel-1-rgb);
   --hanko-ort-schrift: var(--hanko-tafel-1-schrift);
@@ -2370,13 +2213,8 @@ body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-
   color: var(--hanko-tinte-2);
 }
 
-/* =========================================================
-   20. Quellen: Fußnoten wie das Verzeichnis der Kursseite
-   ========================================================= */
+/* 20. Quellen: Fußnoten wie das Verzeichnis der Kursseite */
 
-/* Verweise klein und grau, nicht hochgestellt bunt. Unten ein Verzeichnis
-   „Quellen“ mit Haarlinien und hängendem Einzug; der angesprungene
-   Eintrag trägt den roten Strich links. */
 .markdown-rendered sup.footnote-ref,
 .markdown-rendered .footnote-ref {
   font-size: 0.68em;
@@ -2456,9 +2294,7 @@ body:not(.hanko-ordner-tinte) .kanban-plugin__lane-wrapper .kanban-plugin__lane-
   font-size: 0.85em;
 }
 
-/* =========================================================
-   21. Mobil: Handy und Tablet
-   ========================================================= */
+/* 21. Mobil: Handy und Tablet */
 
 /* Seitenleiste als Schublade auf dem Grund, schwebende Leiste als Glas */
 .is-mobile {
@@ -2489,7 +2325,6 @@ body.is-phone {
   --hanko-siegel-groesse: 3rem;
 }
 
-
 body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-content[data-type="markdown"] :is(.markdown-source-view.seal .cm-sizer, .markdown-preview-view.seal > .markdown-preview-sizer) {
   padding-top: 3.6rem;
 }
@@ -2508,12 +2343,8 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   padding: 0 0.9em 0.85em;
 }
 
-/* =========================================================
-   22. Weekly Page: die Tage als Kartenreihe
-   ========================================================= */
+/* 22. Weekly Page: die Tage als Kartenreihe */
 
-/* Callout [!days] mit einer Liste der Tage: Karten in einer Reihe wie der
-   Fahrplan der Kursseite, quer scrollbar. Gleiches gilt für [!weeks]. */
 .callout:is([data-callout="days"], [data-callout="weeks"]) {
   --callout-color: var(--hanko-tinte-3-rgb);
   --callout-icon: lucide-calendar-days;
@@ -2568,13 +2399,8 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   color: var(--hanko-tinte-3);
 }
 
-/* =========================================================
-   23. Status als Tags: #status/…
-   ========================================================= */
+/* 23. Status als Tags: #status/… */
 
-/* active = in Arbeit (voller Kreis, Ankerfarbe), waiting = wartet (Uhr,
-   Indigo), someday = irgendwann (gepunkteter Ring, Grau), done = erledigt
-   (Haken, Grün). Wie die Belegstufen: Form, Wort und Farbe. */
 .markdown-rendered a.tag[href="#status/active" i],
 .cm-s-obsidian .cm-hashtag.cm-tag-statusactive { --hanko-beleg-rgb: var(--hanko-tafel-1-rgb); }
 .markdown-rendered a.tag[href="#status/waiting" i],
@@ -2636,14 +2462,8 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-/* =========================================================
-   24. Readwise: Cover und Quelle
-   ========================================================= */
+/* 24. Readwise: Cover und Quelle */
 
-/* Notizen aus dem Readwise-Plugin: Cover klein mit Schatten, der
-   „View Highlight“-Link als kleine graue Quelle. Wirkt im Lesemodus.
-   Karten um die Highlights gibt es nicht mehr: Dafür müsste das Theme das
-   Listenelement über seinen Link wählen, also mit einem Elternselektor. */
 .markdown-rendered img[alt="rw-book-cover"],
 .markdown-source-view img[alt="rw-book-cover"] {
   max-width: 7.5rem;
@@ -2666,12 +2486,8 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   color: var(--hanko-rot);
 }
 
-/* =========================================================
-   25. Canvas: Karten auf Papier
-   ========================================================= */
+/* 25. Canvas: Karten auf Papier */
 
-/* Ungefärbte Karten mit Haarlinie, Verbindungen in Grau, Gruppen-Titel
-   als Beschriftung. Gefärbte Karten nehmen die Tafel (Abschnitt 3). */
 .theme-light {
   --canvas-color: 139, 137, 130;
 }
@@ -2712,12 +2528,7 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   border-radius: 12px;
 }
 
-/* =========================================================
-   26. Helper-Klassen (1.1 A2, B3): Breite, Tabellen, Bildraster
-   ========================================================= */
-
-/* Namen wie bei Minimal, damit Vorlagen aus der Community passen.
-   Setzen per cssclasses in den Eigenschaften der Notiz. */
+/* 26. Helper-Klassen (1.1 A2, B3): Breite, Tabellen, Bildraster */
 
 /* wide: 50 rem statt 42 · max: die ganze Breite */
 .markdown-source-view.mod-cm6.wide,
@@ -2730,8 +2541,6 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   --file-line-width: 100%;
 }
 
-/* table-wide, img-wide, wide-dataview: nur das Element auf 50 rem,
-   mittig über der Textspalte */
 .table-wide .markdown-rendered table,
 .markdown-source-view.mod-cm6.table-wide .cm-table-widget,
 .img-wide .markdown-rendered .image-embed,
@@ -2757,9 +2566,6 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   background-color: var(--hanko-flaeche-2);
 }
 
-/* img-grid: Bilder einer Zeile als Raster, drei Spalten; img-grid-2 und
-   img-grid-4 für zwei oder vier. Zeilenumbrüche direkt nach einem Bild
-   verschwinden, Textabsätze bleiben unberührt. */
 .img-grid .markdown-rendered .image-embed {
   display: inline-block;
   width: calc(33.333% - 0.45em);
@@ -2785,12 +2591,8 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   display: none;
 }
 
-/* =========================================================
-   27. Dataview (1.1 B4): wie Bases
-   ========================================================= */
+/* 27. Dataview (1.1 B4): wie Bases */
 
-/* Tabellenkopf als Beschriftung, nur Haarlinien quer, Listen mit grauem
-   Punkt, Inline-Felder als Beschriftung und Pille. Fehler in Tinte. */
 .block-language-dataview .table-view-table {
   border-collapse: collapse;
   width: 100%;
@@ -2854,9 +2656,7 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   color: var(--hanko-tinte-2);
 }
 
-/* =========================================================
-   28. Druck (1.1 D1): weißes Papier, Tinte, kein Siegel
-   ========================================================= */
+/* 28. Druck (1.1 D1): weißes Papier, Tinte, kein Siegel */
 
 @media print {
   body,
