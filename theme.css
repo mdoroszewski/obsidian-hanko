@@ -1250,8 +1250,10 @@ body:not(.hanko-kein-abdruck) .workspace-drawer-vault-name::before {
 }
 
 /* Hell: Stempelfarbe zieht ins Papier ein, Tinte darunter bleibt lesbar */
-.theme-light .cm-sizer::before,
-.theme-light .markdown-preview-sizer::before,
+.theme-light .markdown-source-view.mod-cm6.seal .cm-sizer::before,
+.theme-light .markdown-preview-view.seal > .markdown-preview-sizer::before,
+.theme-light.hanko-siegel-ueberall .cm-sizer::before,
+.theme-light.hanko-siegel-ueberall .markdown-preview-sizer::before,
 .theme-light .empty-state-container::before {
   mix-blend-mode: multiply;
 }
@@ -1286,8 +1288,10 @@ body:not(.hanko-kein-abdruck):not(.hanko-abdruck-ruhig) .empty-state-container::
   }
 }
 
-body:not(.hanko-kein-abdruck) .cm-sizer::before,
-body:not(.hanko-kein-abdruck) .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck) .markdown-source-view.mod-cm6.seal .cm-sizer::before,
+body:not(.hanko-kein-abdruck) .markdown-preview-view.seal > .markdown-preview-sizer::before,
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .cm-sizer::before,
+body:not(.hanko-kein-abdruck).hanko-siegel-ueberall .markdown-preview-sizer::before,
 body:not(.hanko-kein-abdruck) .empty-state-container::before,
 body:not(.hanko-kein-abdruck) .home-tab-logo > svg {
   opacity: var(--hanko-siegel-deckkraft, 1);
