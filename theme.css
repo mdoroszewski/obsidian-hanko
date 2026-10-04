@@ -1022,6 +1022,44 @@ body:not(.hanko-keine-h2-linie) .markdown-rendered .inline-title + h2 {
   border-radius: 10px;
 }
 
+/* 1.1 B2 · Bild vergrößern, solange man klickt und hält. Der Zeiger sagt es. */
+body:not(.hanko-kein-bildzoom) .markdown-rendered .image-embed img {
+  cursor: zoom-in;
+  transition: transform 160ms ease;
+}
+
+body:not(.hanko-kein-bildzoom) .markdown-rendered .image-embed img:active {
+  cursor: zoom-out;
+  position: relative;
+  z-index: 20;
+  transform: scale(1.6);
+  box-shadow: var(--hanko-schatten);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .markdown-rendered .image-embed img {
+    transition: none;
+  }
+}
+
+/* 1.1 B1 · Bildunterschrift aus dem Alt-Text: ![[bild.png|Beschriftung]].
+   Klein und grau unter dem Bild, wie Beschriftungen auf der Kursseite.
+   Nur im Lesemodus, nicht für Dateinamen und nicht für das Readwise-Cover. */
+body.hanko-bild-unterschrift .markdown-rendered .image-embed[alt]:not([alt$=".png" i]):not([alt$=".jpg" i]):not([alt$=".jpeg" i]):not([alt$=".gif" i]):not([alt$=".webp" i]):not([alt$=".svg" i]):not([alt$=".avif" i]):not([alt$=".bmp" i]):not([alt="rw-book-cover"]) {
+  display: inline-block;
+  text-align: center;
+  max-width: 100%;
+}
+
+body.hanko-bild-unterschrift .markdown-rendered .image-embed[alt]:not([alt$=".png" i]):not([alt$=".jpg" i]):not([alt$=".jpeg" i]):not([alt$=".gif" i]):not([alt$=".webp" i]):not([alt$=".svg" i]):not([alt$=".avif" i]):not([alt$=".bmp" i]):not([alt="rw-book-cover"])::after {
+  content: attr(alt);
+  display: block;
+  margin-top: 0.45em;
+  font-size: 0.78em;
+  line-height: 1.4;
+  color: var(--hanko-tinte-3);
+}
+
 /* Tabellen: Kopf als Beschriftung, nur Haarlinien quer */
 .markdown-rendered th {
   text-transform: uppercase;
