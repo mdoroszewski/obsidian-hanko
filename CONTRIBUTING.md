@@ -19,6 +19,7 @@ Pull requests are welcome. Please keep them to one topic and describe what chang
 ## Rules for the CSS
 
 - Everything stays in `theme.css`. No network requests: images and icons are embedded as `data:` URLs.
+- Keep `theme.css` under 100 KB; the directory warns above that. Comments are one line: a section header or a short note such as a colour name. Explanations of why something looks the way it does go into `README.md` and `CHANGELOG.md`.
 - No `!important` and no `:has()`. Keep selectors simple and prefer Obsidian's CSS variables over new selectors.
 - Every text and background pair reaches at least 4.5:1 in light and dark mode.
 - Colours come from Sanzo Wada's *A Dictionary of Color Combinations*. Raw Sienna is the anchor colour and comes first in every plate.

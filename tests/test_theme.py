@@ -156,9 +156,10 @@ class ReviewRules(unittest.TestCase):
         self.assertEqual(hits, [])
 
     def test_file_size_under_the_directory_limit(self):
-        """The directory warns above roughly 110 KiB (Purple Owl at 112 630 bytes passes,
-        Hanko 1.1.0 at 118 900 did not). Keep a margin."""
-        self.assertLessEqual(os.path.getsize(THEME), 110 * 1024)
+        """The directory warned at 110 892 bytes (1.1.1) and at 118 900 (1.1.0);
+        the limit is presumably 100 KB. Explanations belong in README and
+        CHANGELOG, not in theme.css."""
+        self.assertLess(os.path.getsize(THEME), 100 * 1000)
 
     def test_nothing_loaded_from_outside(self):
         self.assertNotIn("@import", self.css)
