@@ -2048,7 +2048,7 @@ body {
 }
 
 .markdown-rendered .footnotes::before {
-  content: "Quellen";
+  content: "Sources";
   display: block;
   margin-bottom: 0.6em;
   font-size: 0.72rem;
