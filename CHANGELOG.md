@@ -4,6 +4,14 @@ All notable changes to Hanko are documented here. The format follows [Keep a Cha
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-10-05
+
+Clears the remaining size warning of the directory's scan. Nothing changes on screen.
+
+### Changed
+
+- `theme.css` is 97.8 KB instead of 110.9 KB. The multi-line comments that explained design decisions are gone; the reasons live in `README.md` and this changelog. Short notes such as colour names stay. The contributing guide now states the 100 KB limit and the comment rule, and the tests check it.
+
 ## [1.1.1] - 2026-10-04
 
 Clears the two warnings the directory's scan raised for 1.1.0. Nothing changes on screen.
@@ -84,7 +92,8 @@ First release.
 - Style Settings options for the seal, colour, focus and form.
 - Mobile refinements.
 
-[Unreleased]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.1.1...HEAD
+[Unreleased]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/mdoroszewski/obsidian-hanko/compare/1.0.0...1.0.1
