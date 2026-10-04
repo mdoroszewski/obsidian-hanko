@@ -153,6 +153,30 @@ settings:
     description: Otherwise they appear thin while hovering.
     type: class-toggle
     default: false
+  -
+    id: hanko-abschnitt-inhalt
+    title: Content
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: hanko-bild-unterschrift
+    title: Image captions from alt text
+    description: In reading view, the alt text of an embedded image appears as a small grey caption below it. File names are not shown.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-kein-bildzoom
+    title: No image zoom
+    description: Otherwise an image grows while you click and hold it.
+    type: class-toggle
+    default: false
+  -
+    id: hanko-embed-nahtlos
+    title: Seamless embeds
+    description: Embedded notes without frame and title, as if they were part of the note.
+    type: class-toggle
+    default: false
 */
 
 /* =========================================================
@@ -1092,6 +1116,24 @@ body.hanko-bild-unterschrift .markdown-rendered .image-embed[alt]:not([alt$=".pn
 .markdown-embed .markdown-embed-link,
 .markdown-embed .markdown-embed-edit-link {
   color: var(--hanko-tinte-3);
+}
+
+/* 1.1 B7 · Nahtlose Embeds: ohne Karte und Titel, als Teil der Notiz.
+   Der kleine Link zur Quelle bleibt. */
+body.hanko-embed-nahtlos .markdown-embed {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0.4em 0;
+}
+
+body.hanko-embed-nahtlos .markdown-embed .markdown-embed-title {
+  display: none;
+}
+
+body.hanko-embed-nahtlos .markdown-embed .markdown-embed-content > .markdown-preview-view {
+  padding: 0;
 }
 
 /* Eigenschaften: Haarlinie darunter, Kopf als Beschriftung */
