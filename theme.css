@@ -1758,6 +1758,58 @@ body:not(.hanko-ordner-tinte) .nav-files-container .nav-folder-children :is(.col
   opacity: 1;
 }
 
+/* 1.1 B6 · Tasks: Daten, Rückverweise und Werkzeuge klein und grau wie
+   Quellenverweise. Das Prioritätszeichen bleibt, es ist schon eine Form. */
+.task-list-item .task-due,
+.task-list-item .task-scheduled,
+.task-list-item .task-start,
+.task-list-item .task-created,
+.task-list-item .task-done,
+.task-list-item .task-cancelled,
+.task-list-item .task-recurring,
+.task-list-item .task-id,
+.task-list-item .task-dependsOn,
+.task-list-item .task-onCompletion,
+.task-list-item .task-block-link,
+.task-list-item .tasks-backlink {
+  font-size: 0.85em;
+  color: var(--hanko-tinte-3);
+}
+
+.task-list-item .task-block-link a,
+.task-list-item .tasks-backlink a {
+  color: var(--hanko-tinte-3);
+  border-bottom-color: var(--hanko-linie);
+}
+
+.task-list-item .task-block-link a:hover,
+.task-list-item .tasks-backlink a:hover {
+  color: var(--hanko-tinte);
+  border-bottom-color: var(--hanko-rot);
+}
+
+.task-list-item .tasks-edit,
+.task-list-item .tasks-postpone {
+  color: var(--hanko-tinte-3);
+  opacity: 0.55;
+}
+
+.task-list-item:hover .tasks-edit,
+.task-list-item:hover .tasks-postpone {
+  opacity: 1;
+}
+
+.block-language-tasks .task-count,
+.block-language-tasks .tasks-count {
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hanko-tinte-3);
+}
+
+.block-language-tasks .tasks-group-heading {
+  color: var(--hanko-tinte-2);
 }
 
 /* =========================================================
