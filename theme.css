@@ -2509,3 +2509,77 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
 .canvas-controls .canvas-control-group {
   border-radius: 12px;
 }
+
+/* =========================================================
+   26. Helper-Klassen (1.1 A2, B3): Breite, Tabellen, Bildraster
+   ========================================================= */
+
+/* Namen wie bei Minimal, damit Vorlagen aus der Community passen.
+   Setzen per cssclasses in den Eigenschaften der Notiz. */
+
+/* wide: 50 rem statt 42 · max: die ganze Breite */
+.markdown-source-view.mod-cm6.wide,
+.markdown-preview-view.wide {
+  --file-line-width: 50rem;
+}
+
+.markdown-source-view.mod-cm6.max,
+.markdown-preview-view.max {
+  --file-line-width: 100%;
+}
+
+/* table-wide, img-wide, wide-dataview: nur das Element auf 50 rem,
+   mittig über der Textspalte */
+.table-wide .markdown-rendered table,
+.markdown-source-view.mod-cm6.table-wide .cm-table-widget,
+.img-wide .markdown-rendered .image-embed,
+.wide-dataview .block-language-dataview {
+  position: relative;
+  left: 50%;
+  width: min(50rem, calc(100vw - 4rem));
+  max-width: none;
+  transform: translateX(-50%);
+}
+
+.img-wide .markdown-rendered .image-embed img {
+  width: 100%;
+}
+
+/* table-small: engere Tabellen · row-alt: jede zweite Zeile auf Fläche 2 */
+.table-small .markdown-rendered table {
+  --table-text-size: 0.8em;
+  --table-cell-padding: 0.35em 0.6em;
+}
+
+.row-alt .markdown-rendered tbody tr:nth-child(even) td {
+  background-color: var(--hanko-flaeche-2);
+}
+
+/* img-grid: Bilder einer Zeile als Raster, drei Spalten; img-grid-2 und
+   img-grid-4 für zwei oder vier. Zeilenumbrüche direkt nach einem Bild
+   verschwinden, Textabsätze bleiben unberührt. */
+.img-grid .markdown-rendered .image-embed {
+  display: inline-block;
+  width: calc(33.333% - 0.45em);
+  margin: 0 0.2em 0.4em 0;
+  vertical-align: top;
+}
+
+.img-grid-2 .markdown-rendered .image-embed {
+  width: calc(50% - 0.45em);
+}
+
+.img-grid-4 .markdown-rendered .image-embed {
+  width: calc(25% - 0.45em);
+}
+
+.img-grid .markdown-rendered .image-embed img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.img-grid .markdown-rendered .image-embed + br {
+  display: none;
+}
+
