@@ -3047,3 +3047,48 @@ body.is-phone:not(.hanko-kein-abdruck):not(.show-inline-title) .workspace-leaf-c
   color: var(--hanko-tinte-2);
 }
 
+/* =========================================================
+   28. Druck (1.1 D1): weißes Papier, Tinte, kein Siegel
+   ========================================================= */
+
+@media print {
+  body,
+  .theme-light,
+  .theme-dark {
+    --hanko-grund: #ffffff;
+    --hanko-papier: #ffffff;
+    --hanko-flaeche: #ffffff;
+    --hanko-flaeche-2: #f2f2f2;
+    --hanko-linie: #d8d8d8;
+    --hanko-tinte: #151515;
+    --hanko-tinte-2: #5a5853;
+    --hanko-tinte-3: #8b8982;
+    --hanko-glas: #ffffff;
+    --hanko-schatten: none;
+    --background-primary: #ffffff;
+    --text-normal: #151515;
+    background-color: #ffffff;
+  }
+
+  .markdown-preview-view.seal > .markdown-preview-sizer::before,
+  .cm-sizer::before {
+    content: none;
+  }
+
+  .markdown-rendered a.internal-link,
+  .markdown-rendered a.external-link {
+    color: #151515;
+    border-bottom: 1px solid #151515;
+  }
+
+  .callout,
+  .markdown-embed {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .markdown-rendered .image-embed img {
+    transform: none;
+    box-shadow: none;
+  }
+}
